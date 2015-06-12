@@ -1,6 +1,6 @@
-# Data visualizations using NASA-NEXDCP30 climate data suing the HOLOS API.
+## Data visualizations using NASA-NEXDCP30 climate data on HOLOS.
 
-## The project structure is based on [RequireJS-Multipage-Shim-Boilerplate](http://robdodson.me/blog/2012/11/18/a-require-dot-js-multipage-shimmed-site-how-to/)
+
 
 ## Quick Start
 
@@ -23,4 +23,6 @@ cd nasa-nex-dataviz
 npm install
 grunt
 ```
+
+The project structure is based on [RequireJS-Multipage-Shim-Boilerplate](http://robdodson.me/blog/2012/11/18/a-require-dot-js-multipage-shimmed-site-how-to/).
 
