@@ -12,13 +12,11 @@ module.exports = {
       // top level dependencies, 'include' will find
       // nested dependencies.
       include: [
-        'app/includes/nasa-nex.holos',
         'jquery',
         'bootstrap',
         'leaflet',
         'leaflet.draw',
-        'd3',
-        'topojson'
+        'd3'
       ]
     },
 
