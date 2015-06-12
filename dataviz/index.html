@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>NASA NEX-DCP30</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@BerkeleyGIF">
+    <meta name="twitter:title" content="NASA NEX-DCP30">
+    <meta name="twitter:description" content="Climate data visualizations built on HOLOS API serving NASA NEX-DCP30 data">
+    <meta name="twitter:creator" content="@BerkeleyGIF">
+
+    <!-- The fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Quattrocento|Fanwood+Text" rel="stylesheet" type="text/css">
+
+    <!-- The styles -->
+    <link href="./css/bootstrap.css" rel="stylesheet" type='text/css'>
+    <link href="./css/leaflet.css" rel="stylesheet" type='text/css'>
+    <link href="./css/leaflet.draw.css" rel="stylesheet" type='text/css'>
+    <link href="./css/style.css" rel="stylesheet" type='text/css'>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <!-- Full page MAP: Absolutely positioned div -->
+    <div id="map"></div>
+
+
+    <div class="container-fluid" style="height:100%;">       
+
+      <!-- HEADER  -->
+      <div class="row-fluid" id="header">
+        <div class="col-xs-12 col-sm-12 col-md-6">
+          <h1><span class="title">NASA NEX DCP-30</span></h1>
+          <h2>
+            <span class="title">US Temperature Maximums</span>
+          </h2>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6" style="border: solid 1px white;">
+          <div id="slider1"></div>
+          <h2 id="time-slider">February 2031</h2>
+        </div>
+      </div> <!-- End HEADER Row -->      
+
+      <!-- CHART  -->
+      <div class="row-fluid" id="chart" style="height:75%;">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-6" style="border: solid 1px white;height:100%;">
+          <h2>D3 Chart</h2>
+          <div id="d3-canvas"></div>
+        </div>
+      </div> <!-- End CHART Row -->   
+
+
+      <!-- FOOTER  -->
+      <div class="row-fluid" id="footer">
+        <div class="col-xs-6 col-sm-6 col-md-2">
+          <div class="actions">
+            <p>Step 1 : Use toolbar to place a point or draw a rectangle</p>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-2">
+          <div class="actions">
+            <p>Step 2 : View chart</p>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-2">
+          <div class="actions">
+            <p>Step 3 : Adjust model parameters</p>
+          </div>
+        </div>
+      </div> <!-- End FOOTER Row -->   
+
+
+   </div> <!-- End container -->
+
+    <div id="holos-logo">
+        <a href="http://holos.berkeley.edu/" tooltip="Berkeley Ecoinformatics Engine" tooltip-placement="right"><img src="css/images/HOLOS_logo_color_horizontal_highres_transparent.png" alt="HOLOS" height="40"></a>   
+        <p>
+          <span class="attribution"> Leaflet | CartoDB | NASA</span>
+        </p>     
+    </div>
+
+    <!-- The javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="./js/vendor/require.js"></script>
+    <script type="text/javascript">
+    // Load common code that includes config,
+    // then load the app logic for this page.
+    require(['./js/common'], function (common) {
+      // ./js/common.js sets the baseUrl to be ./js/
+      // You can ask for 'app/main' here instead
+      // of './js/app/main'
+      require(['app/main']);
+    });
+    </script>
+
+  </body>
+</html>
