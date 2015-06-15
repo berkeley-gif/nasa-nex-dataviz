@@ -44,16 +44,56 @@
 
       <!-- HEADER  -->
       <div class="row-fluid" id="header">
-        <div class="col-xs-12 col-sm-12 col-md-6">
+
+        <!-- TITLE --> 
+        <div class="col-xs-12 col-sm-12 col-md-6">          
           <h1><span class="title">NASA NEX DCP-30</span></h1>
           <h2>
             <span class="title">US Temperature Maximums</span>
           </h2>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-6" style="border: solid 1px white;">
-          <div id="slider1"></div>
-          <h2 id="time-slider">February 2031</h2>
-        </div>
+        </div> <!-- End TITLE column -->
+
+        <!-- MAP TILE CONTROLS -->
+        <div class="col-xs-12 col-sm-12 col-md-6">        
+          <div class="map-tile-settings">    
+
+            <div class="map-tile-current">
+              <h2>February 2031</h2>    
+            </div>
+
+            <div class="map-tile-icon">
+              <a class="btn btn-cog" data-toggle="collapse" href="#map-tile-controls">
+                <span class='glyphicon glyphicon-cog'></span>
+              </a>
+            </div>
+
+            <div class="collapse" id="map-tile-controls">
+              <div class="well">
+                <!-- Year slider --> 
+                <div id="year-slider" style="height:100px;width:300px;"></div> 
+                <!-- Month list --> 
+                <!-- <select class="month">
+                  <option>January</option>       
+                  <option>February</option>       
+                  <option>March</option>       
+                  <option>April</option>       
+                  <option>May</option>       
+                  <option>June</option>       
+                  <option>July</option>       
+                  <option>August</option>       
+                  <option>September</option>       
+                  <option>October</option>       
+                  <option>November</option>       
+                  <option>December</option>                 
+                </select> -->
+
+              </div>
+            </div>
+
+          </div> <!-- End map-tile-settings --> 
+        </div> <!-- End MAP TILE CONTROLS column --> 
+
+
       </div> <!-- End HEADER Row -->      
 
       <!-- CHART  -->
@@ -67,34 +107,44 @@
       </div> <!-- End CHART Row -->   
 
 
-      <!-- FOOTER  -->
-      <div class="row-fluid" id="footer">
+   </div> <!-- End container -->
+
+    <!-- LOGO  -->
+    <div id="holos-logo">
+        <a href="http://holos.berkeley.edu/" data-toggle="tooltip" title="Berkeley Ecoinformatics Engine" ><img src="css/images/HOLOS_logo_color_horizontal_highres_transparent.png" alt="HOLOS" height="40"></a>   
+        <p>
+          <span class="attribution"> Leaflet | CartoDB | NASA</span>
+        </p>     
+    </div>
+
+
+    <!-- FOOTER  -->
+    <footer class="footer">
+     <div class="container-fluid">
+      <div class="row-fluid">
+
         <div class="col-xs-6 col-sm-6 col-md-2">
           <div class="actions">
             <p>Step 1 : Use toolbar to place a point or draw a rectangle</p>
           </div>
         </div>
+
         <div class="col-xs-6 col-sm-6 col-md-2">
           <div class="actions">
             <p>Step 2 : View chart</p>
           </div>
         </div>
+
         <div class="col-xs-6 col-sm-6 col-md-2">
           <div class="actions">
-            <p>Step 3 : Adjust model parameters</p>
+            <p>Step 3 : Use <span class='glyphicon glyphicon-cog'></span> to adjust map and chart parameters</p>
           </div>
         </div>
-      </div> <!-- End FOOTER Row -->   
 
+      </div>   
+     </div>
+   </footer>
 
-   </div> <!-- End container -->
-
-    <div id="holos-logo">
-        <a href="http://holos.berkeley.edu/" tooltip="Berkeley Ecoinformatics Engine" tooltip-placement="right"><img src="css/images/HOLOS_logo_color_horizontal_highres_transparent.png" alt="HOLOS" height="40"></a>   
-        <p>
-          <span class="attribution"> Leaflet | CartoDB | NASA</span>
-        </p>     
-    </div>
 
     <!-- The javascript
     ================================================== -->

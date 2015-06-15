@@ -41,21 +41,26 @@ define(['d3'], function (require) {
         }
     };
 
+    var format = d3.time.format('%Y-%m-%d');
+
     // scale function
     var timeScale = d3.time.scale()
-                        .domain([new Date('1950-01-16'), new Date('2100-12-16')])
-                        .clamp(true)
-                        .nice(d3.time.month);
+                      .domain([new Date('1950-01-17'), new Date('2099-12-16')])
+                      .nice(d3.time.month);
+    
+    // initial value
+    startingValue = format(new Date('2031-02-17'));  
+    console.log(startingValue)         ;
 
     var date = '2031-02-16';
 
-    var format = d3.time.format('%Y');
+    
 
     tiles.opts = {
         models: models,
         scenarios: scenarios,
         climatevars: climatevars,
-        period: date
+        period: timeScale
     }
 
     //'https://dev-ecoengine.berkeley.edu/api/tiles/tasmax_rcp60_r1i1p1_gfdl-esm2m-2031-02-16/{z}/{x}/{y}/';

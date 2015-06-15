@@ -13,7 +13,7 @@ define(function (require) {
   require('leaflet.draw');
   require('bootstrap');
 
-  //require('app/includes/time-slider');
+  var slider = require('app/includes/time-slider');
   //require('app/includes/time-series-chart');
 
 
@@ -24,10 +24,16 @@ define(function (require) {
       var env = 'development';
 
       //console.log(d3.slider);
-      //d3.select('#slider1').call(d3.slider());
+      var width = $('#year-slider').width();
+      var height = $('#year-slider').height();
+      d3.select('#year-slider').call(slider.width(width).height(height));
 
       // BOOTSTRAP INITIALIZATIONS
-      //$('[data-toggle="tooltip"]').tooltip();
+
+      // Tooltips
+      $('[data-toggle="tooltip"]').tooltip();
+
+      //Map controls
 
       
 
