@@ -17,6 +17,11 @@ html, body {
 .leaflet-top.leaflet-left {
 	margin-top: 150px;
 }
+/* overriding nv.d3.css svg style */
+.leaflet-overlay-pane svg {
+  width: auto !important;
+  height: auto !important;
+}
 
 /**
  * TYPOGRAPHY
@@ -99,102 +104,11 @@ p {
 
 
 /**
- * D3 Chart
+ * D3 COMPONENTS
  */
 
- #chart {
-  padding-right: 2%;
- }
 
-.axis {
-  shape-rendering: crispEdges;
-}
-
-.axis path, .axis line {
-  fill: none;
-  stroke-width: .5px;
-}
-
-.x.axis path {
-  stroke: #000;
-}
-
-.x.axis line {
-  stroke: #fff;
-  stroke-opacity: .5;
-}
-
-.y.axis line {
-  stroke: #ddd;
-  stroke-width: 1px !important;
-}
-
-path.line {
-  fill: none;
-  stroke: #000;
-  stroke-width: .5px;
-}
-
-rect.pane {
-  cursor: move;
-  fill: none;
-  pointer-events: all;
-}
-
-line {
-  stroke: #000;
-  stroke-width: 1.px;
-}
-
-text {
-  font-size: 10px;
-}
-
-.titles{
-  font-size: 14px;
-}
-
-.explanation{
-  font-size: 20px;
-  font-weight: 300;
-  text-align: center;
-}
-
-a {
-	text-decoration: none;
-	color: #6B6B6B;
-}
-
-.d3-tip {
-  line-height: 1;
-  padding: 8px;
-  background: rgba(54,54,54,0.8);
-  color: #fff;
-  border-radius: 2px;
-  font-family: 'Raleway', sans-serif;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 8px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(54,54,54,0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
-
-/* Style northward tooltips differently */
-.d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-}
-
-
+/*
 .axis {
   fill: gray;
   -webkit-user-select: none;
@@ -219,4 +133,4 @@ a {
   fill: white;
   text-align: center;
   font-size: 18px;
-}
+}*/
