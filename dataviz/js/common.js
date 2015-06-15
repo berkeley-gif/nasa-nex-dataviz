@@ -7,7 +7,8 @@ requirejs.config({
     'bootstrap':                'vendor/bootstrap',
     'leaflet':                  'vendor/leaflet-src',
     'leaflet.draw':             'vendor/leaflet.draw-src',
-    'd3':                       'vendor/d3'
+    'd3':                       'vendor/d3',
+    'nv.d3':                    'vendor/nv.d3'
   },
   //Remember: only use shim config for non-AMD scripts,
   //scripts that do not already call define(). The shim
@@ -19,6 +20,10 @@ requirejs.config({
     },
     'leaflet.draw': {
       deps: ['leaflet']
+    },
+    'nv.d3': {
+      deps: ['d3'],
+      exports: 'nv'
     }
   }
 });

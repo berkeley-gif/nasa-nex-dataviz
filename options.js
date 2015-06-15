@@ -16,7 +16,8 @@ module.exports = {
         'bootstrap',
         'leaflet',
         'leaflet.draw',
-        'd3'
+        'd3',
+        'nv.d3'
       ]
     },
 
