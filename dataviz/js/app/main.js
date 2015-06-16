@@ -23,19 +23,25 @@ define(function (require) {
       // INITIALIZE HOLOS ENV
       var env = 'development';
 
-      //console.log(d3.slider);
+      
+      // INITIALIZE D3 COMPONENTS
+
+      // Year slider for map tiles
       var width = $('#year-slider').width();
       var height = $('#year-slider').height();
       var timeScale = nexdcp30Tiles.opts.period;
       var startingValue = new Date('2031');
       var formatDate = d3.time.format("%Y");
-      d3.select('#year-slider').slider
+      d3.select('#year-slider').call(slider
           .width(width)
           .height(height)
           .timeScale(timeScale)
           .startingValue(startingValue)
-          .formatDate(formatDate);
+          .formatDate(formatDate)
+      );
+      //Chart
 
+      
       // BOOTSTRAP INITIALIZATIONS
 
       // Tooltips

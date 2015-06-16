@@ -97,7 +97,11 @@ p {
   color: #EEEEEE;
 }
 
-
+#map-tile-controls .well {
+  background-color: transparent;
+  border: none;
+  float: none;
+}
 
 
 
