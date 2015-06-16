@@ -5,9 +5,8 @@ define(['d3'], function () {
 
   'use strict';
 
-  //============================================================
+ 
   // Public Variables with Default Settings
-   //------------------------------------------------------------
   var width = null;
   var height = null;
   var margin = {
@@ -21,26 +20,37 @@ define(['d3'], function () {
      .clamp(true);
   var formatDate = d3.time.format('%b %d');
   var startingValue = new Date('2012-09-20');
+  var dispatch = d3.dispatch('brushed');
 
-  function slider(selection) {
+  
+  function timeSlider(selection) {
 
     selection.each(function(data) {
 
-      console.log(timeScale);
       timeScale.range([0, width + margin.left + margin.right]);
-      console.log(timeScale);
 
       var brush = d3.svg.brush()
         .x(timeScale)
-        .extent([startingValue, startingValue]);
+        .extent([startingValue, startingValue])
+        .on('brush', function(){
+          var value = brush.extent()[0];
+
+          if (d3.event.sourceEvent) { // not a programmatic event
+            value = timeScale.invert(d3.mouse(this)[0]);
+            brush.extent([value, value]);
+            dispatch.brushed(formatDate(value));
+          }
+
+          handle.attr("transform", "translate(" + timeScale(value) + ",0)");
+          handle.select('text').text(formatDate(value));
+        })
 
 
       var container = d3.select(this).append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
-        .append("g")
+        .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
 
 
       container.append('g')
@@ -63,93 +73,89 @@ define(['d3'], function () {
         })
         .attr('class', 'halo');
 
+
       var slider = container.append('g')
         .attr('class', 'slider')
+        //.on('mouseover', dispatch.customHover)
         .call(brush);
+
 
       slider.selectAll('.extent,.resize')
         .remove();
 
+
       slider.select('.background')
         .attr('height', height);
 
+
       var handle = slider.append('g')
         .attr('class', 'handle');
+
 
       handle.append('path')
         .attr('transform', 'translate(0,' + height / 2 + ')')
         .attr('d', 'M 0 -20 V 20');
 
+
       handle.append('text')
-        .text(startingValue)
+        .text(formatDate(startingValue))
         .attr('transform', 'translate(' + (-18) + ' ,' + (height / 2 - 25) + ")");
+
 
       slider
         .call(brush.event);
-
-      brush.on("brush", brushed);  
-
-      function brushed() {
-        var value = brush.extent()[0];
-
-        if (d3.event.sourceEvent) { // not a programmatic event
-          value = timeScale.invert(d3.mouse(this)[0]);
-          brush.extent([value, value]);
-        }
-
-        handle.attr("transform", "translate(" + timeScale(value) + ",0)");
-        handle.select('text').text(formatDate(value));
-      }
 
 
     });
   }
 
 
-  //============================================================
+ 
   // Expose Public Variables
-  //------------------------------------------------------------
-  slider.margin = function(_) {
+
+  timeSlider.margin = function(_) {
       if (!arguments.length) return margin;
       margin.top    = typeof _.top    != 'undefined' ? _.top    : margin.top;
       margin.right    = typeof _.right    != 'undefined' ? _.right    : margin.right;
       margin.bottom    = typeof _.bottom    != 'undefined' ? _.bottom    : margin.bottom;
       margin.left   = typeof _.left   != 'undefined' ? _.left   : margin.left;
-      return slider;
+      return timeSlider;
   };
 
-  slider.width = function(_) {
+  timeSlider.width = function(_) {
       if (!arguments.length) return width;
       width = _;
-      return slider;
+      return timeSlider;
   };
 
-  slider.height = function(_) {
+  timeSlider.height = function(_) {
       if (!arguments.length) return height;
       height = _;
-      return slider;
+      return timeSlider;
   };
 
-  slider.startingValue = function(_) {
+  timeSlider.startingValue = function(_) {
       if (!arguments.length) return startingValue;
       startingValue =  _;
-      return slider;
+      return timeSlider;
   };
 
-  slider.formatDate = function(_) {
+  timeSlider.formatDate = function(_) {
       if (!arguments.length) return formatDate;
       formatDate = _;
-      return slider;
+      return timeSlider;
   };
 
-  slider.timeScale = function(_) {
+  timeSlider.timeScale = function(_) {
       if (!arguments.length) return timeScale;
       timeScale = _;
-      return slider;
+      return timeSlider;
   };
 
 
-  return slider;
+  d3.rebind(timeSlider, dispatch, 'on');
+
+  return timeSlider;
 
 
 

@@ -80,10 +80,6 @@ p {
   padding-left: 2%;
 }
 
-.map-tile-settings {
-	float: right;
-}
-
 .map-tile-current, .map-tile-icon {
   display: inline-block;
 }
@@ -97,10 +93,11 @@ p {
   color: #EEEEEE;
 }
 
-#map-tile-controls .well {
-  background-color: transparent;
+#map-tile-controls.well {
   border: none;
   float: none;
+  background: rgba(5, 5, 5, 0.4);
+  text-shadow: 0px 0px 4px black;
 }
 
 
@@ -194,28 +191,80 @@ p {
  */
 
 
-.axis {
-  fill: gray;
+#year-slider .axis {
+  fill: #EEEEEE;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
 
-.axis .halo {
-  stroke: gray;
+#year-slider .axis .halo {
+  stroke: #EEEEEE;
   stroke-width: 4px;
   stroke-linecap: round;
 }
 
-.slider .handle path {
-  stroke: black;
+#year-slider .slider .handle path {
+  stroke: #EEEEEE;
   stroke-width: 3px;
   stroke-linecap: round;
   pointer-events: none;
 }
 
-.slider .handle text {
-  fill: black;
+#year-slider .slider .handle text {
+  fill: #EEEEEE;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
+}
+
+/* Chart */
+#d3-canvas {
+  margin-right: auto;
+  margin-left: auto;
+  width: 80%;
+  font-size: 14px;
+  background-color: white;
+}
+.axis {
+  shape-rendering: crispEdges;
+}
+ 
+.axis path, .axis line {
+  fill: none;
+  stroke-width: .5px;
+}
+ 
+.x.axis path {
+  stroke: #000;
+}
+ 
+.x.axis line {
+  stroke: #fff;
+  stroke-opacity: .5;
+}
+ 
+.y.axis line {
+  stroke: #ddd;
+  stroke-width: 1px !important;
+}
+ 
+path.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: .5px;
+}
+ 
+rect.pane {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+ 
+line {
+  stroke: #000;
+  stroke-width: 1.px;
+}
+ 
+text {
+  font-size: 10px;
 }
