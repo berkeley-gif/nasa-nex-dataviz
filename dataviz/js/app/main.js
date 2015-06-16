@@ -26,7 +26,15 @@ define(function (require) {
       //console.log(d3.slider);
       var width = $('#year-slider').width();
       var height = $('#year-slider').height();
-      d3.select('#year-slider').call(slider.width(width).height(height));
+      var timeScale = nexdcp30Tiles.opts.period;
+      var startingValue = new Date('2031');
+      var formatDate = d3.time.format("%Y");
+      d3.select('#year-slider').slider
+          .width(width)
+          .height(height)
+          .timeScale(timeScale)
+          .startingValue(startingValue)
+          .formatDate(formatDate);
 
       // BOOTSTRAP INITIALIZATIONS
 

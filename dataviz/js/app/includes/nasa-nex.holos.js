@@ -45,8 +45,7 @@ define(['d3'], function (require) {
 
     // scale function
     var timeScale = d3.time.scale()
-                      .domain([new Date('1950-01-17'), new Date('2099-12-16')])
-                      .nice(d3.time.month);
+                      .domain([new Date('1950-01-17'), new Date('2099-12-16')]);
     
     // initial value
     startingValue = format(new Date('2031-02-17'));  

@@ -3,7 +3,7 @@
 
 define(['d3'], function () {
 
-  "use strict";
+  'use strict';
 
   //============================================================
   // Public Variables with Default Settings
@@ -16,87 +16,84 @@ define(['d3'], function () {
     bottom: 5,
     left: 5
   }
-  var timeScale = d3.time.scale();
-  var formatDate = d3.time.format("%b %d");
-  var startingValue = new Date('2012-03-20');
-
-  //Private variables
-  var brush = d3.svg.brush()
-    .x(timeScale)
-    .extent([startingValue, startingValue])
-    .on("brush", slider.brushed);
-
-  var dispatch = d3.dispatch("brush");
+  var timeScale = d3.time.scale()
+     .domain([new Date('2012-01-02'), new Date('2013-01-01')])
+     .clamp(true);
+  var formatDate = d3.time.format('%b %d');
+  var startingValue = new Date('2012-09-20');
 
   function slider(selection) {
 
     selection.each(function(data) {
 
-      console.log(width, height);
+      console.log(timeScale);
       timeScale.range([0, width + margin.left + margin.right]);
+      console.log(timeScale);
 
-
+      var brush = d3.svg.brush()
+        .x(timeScale)
+        .extent([startingValue, startingValue]);
 
 
       var container = d3.select(this).append('svg')
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 
 
-      container.append("g")
-        .attr("class", "x axis")
+      container.append('g')
+        .attr('class', 'x axis')
         // put in middle of screen
-        .attr("transform", "translate(0," + height / 2 + ")")
+        .attr('transform', 'translate(0,' + height / 2 + ')')
         // inroduce axis
         .call(d3.svg.axis()
         .scale(timeScale)
-          .orient("bottom")
+          .orient('bottom')
           .tickFormat(function(d) {
             return formatDate(d);
           })
         .tickSize(0)
         .tickPadding(12)
         .tickValues([timeScale.domain()[0], timeScale.domain()[1]]))
-        .select(".domain")
+        .select('.domain')
         .select(function() {
           return this.parentNode.appendChild(this.cloneNode(true));
         })
-        .attr("class", "halo");
+        .attr('class', 'halo');
 
-      var slider = container.append("g")
-        .attr("class", "slider")
+      var slider = container.append('g')
+        .attr('class', 'slider')
         .call(brush);
 
-      slider.selectAll(".extent,.resize")
+      slider.selectAll('.extent,.resize')
         .remove();
 
-      slider.select(".background")
-        .attr("height", height);
+      slider.select('.background')
+        .attr('height', height);
 
-      var handle = slider.append("g")
-        .attr("class", "handle")
+      var handle = slider.append('g')
+        .attr('class', 'handle');
 
-      handle.append("path")
-        .attr("transform", "translate(0," + height / 2 + ")")
-        .attr("d", "M 0 -20 V 20")
+      handle.append('path')
+        .attr('transform', 'translate(0,' + height / 2 + ')')
+        .attr('d', 'M 0 -20 V 20');
 
       handle.append('text')
         .text(startingValue)
-        .attr("transform", "translate(" + (-18) + " ," + (height / 2 - 25) + ")");
+        .attr('transform', 'translate(' + (-18) + ' ,' + (height / 2 - 25) + ")");
 
       slider
-        .call(brush.event)
+        .call(brush.event);
 
-      
-      function () {
+      brush.on("brush", brushed);  
+
+      function brushed() {
         var value = brush.extent()[0];
 
         if (d3.event.sourceEvent) { // not a programmatic event
           value = timeScale.invert(d3.mouse(this)[0]);
-          console.log(d3.mouse(this)[0], value);
           brush.extent([value, value]);
         }
 
@@ -146,12 +143,7 @@ define(['d3'], function () {
   };
 
   slider.timeScale = function(_) {
-      if (!arguments.length) {
-        timeScale
-            .domain([new Date('2012-01-02'), new Date('2013-01-01')])
-            .clamp(true);
-        return timeScale;
-      }
+      if (!arguments.length) return timeScale;
       timeScale = _;
       return slider;
   };
