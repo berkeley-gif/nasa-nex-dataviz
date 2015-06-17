@@ -113,20 +113,33 @@ define(function (require) {
       // INITIALIZE D3 COMPONENTS
 
       // Year slider for map tiles
-      var slider_width = $('#map-tile-slider').width();
-      var slider_height = $('#map-tile-slider').height();
-      var slider_timeScale = rasterTiles.getOpts().timeScale;
-      var slider_startingValue = new Date('2031-03');
-      var slider_formatDate = d3.time.format("%B %Y");
+      var sliderWidth = $('#map-tile-slider').width();
+      var sliderHeight = $('#map-tile-slider').height();
+      var sliderTimeScale = rasterTiles.getOpts().timeScale;
+      var sliderDate = rasterTiles.timeEvent();
+      var sliderFormatDate = d3.time.format("%B %Y");
+
       var yearSlider = timeSlider
-            .width(slider_width)
-            .height(slider_height)
-            .timeScale(slider_timeScale)
-            .startingValue(slider_startingValue)
-            .formatDate(slider_formatDate);
+            .width(sliderWidth)
+            .height(sliderHeight)
+            .timeScale(sliderTimeScale)
+            .dateValue(sliderDate)
+            .formatDate(sliderFormatDate);
+
       d3.select('#slider-svg').call(yearSlider);
 
-      
+    
+      // TIME SLIDER  INTERACTIONS
+
+      // Fetch new raster tiles from holos
+      yearSlider.on('brushed', function(d){
+        console.log(d);
+        console.log(rasterTiles.getURL());
+        rasterTiles.timeEvent(d);
+        console.log(rasterTiles.getURL());
+      });
+
+      // Update date in upper right corner
 
 
       // Chart
@@ -299,19 +312,6 @@ define(function (require) {
       });
 
 
-
-
-
-      // TIME SLIDER  INTERACTIONS
-
-      // Fetch new raster tiles from holos
-      yearSlider.on('brushed', function(d){
-        console.log(d);
-        var month = d;
-        var year = d;
-      });
-
-      // Update date in upper right corner
 
 
 

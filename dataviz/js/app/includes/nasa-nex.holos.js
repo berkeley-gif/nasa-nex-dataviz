@@ -95,7 +95,7 @@ define(['d3'], function (require) {
 
         tiles.timeEvent = function(_) {
           if (!arguments.length) return _timeEvent;
-          _timeEvent = _;
+          _timeEvent = _opts.timeFormat(new Date(_));
           return tiles;
         };
 

@@ -19,7 +19,7 @@ define(['d3'], function () {
      .domain([new Date('2012-01-02'), new Date('2013-01-01')])
      .clamp(true);
   var formatDate = d3.time.format('%b %d');
-  var startingValue = new Date('2012-09-20');
+  var dateValue = new Date('2012-09-20');
   var dispatch = d3.dispatch('brushed');
 
   
@@ -31,7 +31,7 @@ define(['d3'], function () {
 
       var brush = d3.svg.brush()
         .x(timeScale)
-        .extent([startingValue, startingValue])
+        .extent([dateValue, dateValue])
         .on('brush', function(){
           var value = brush.extent()[0];
 
@@ -98,7 +98,7 @@ define(['d3'], function () {
 
 
       handle.append('text')
-        .text(formatDate(startingValue))
+        .text(formatDate(dateValue))
         .attr('transform', 'translate(' + (-18) + ' ,' + (height / 2 - 25) + ")");
 
 
@@ -134,9 +134,9 @@ define(['d3'], function () {
       return timeSlider;
   };
 
-  timeSlider.startingValue = function(_) {
-      if (!arguments.length) return startingValue;
-      startingValue =  _;
+  timeSlider.dateValue = function(_) {
+      if (!arguments.length) return dateValue;
+      dateValue =  new Date (_);
       return timeSlider;
   };
 
