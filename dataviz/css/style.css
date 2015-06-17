@@ -93,7 +93,7 @@ p {
   color: #EEEEEE;
 }
 
-#map-tile-controls.well {
+#map-tile-slider .well {
   border: none;
   float: none;
   background: rgba(5, 5, 5, 0.4);

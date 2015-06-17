@@ -50,7 +50,7 @@ define(['d3'], function () {
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('transform', 'translate(' + 10 + ',' + 10 + ')');
 
 
       container.append('g')
@@ -76,7 +76,6 @@ define(['d3'], function () {
 
       var slider = container.append('g')
         .attr('class', 'slider')
-        //.on('mouseover', dispatch.customHover)
         .call(brush);
 
 

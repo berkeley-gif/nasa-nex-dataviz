@@ -25,6 +25,88 @@ define(function (require) {
       // INITIALIZE HOLOS ENV
       var env = 'development';
 
+
+
+      // BOOTSTRAP INITIALIZATIONS
+
+      // Tooltips
+      $('[data-toggle="tooltip"]').tooltip();
+
+
+
+      // INITIALIZE LAYERS
+
+      // Basemap
+      var CartoDB_DarkMatter = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+        attribution: '<a href="http://www.openstreetmap.org/copyright" target="_blank">OSM</a> | <a href="http://cartodb.com/attributions" target="_blank">CartoDB</a> |',
+        subdomains: 'abcd',
+        maxZoom: 19
+      });
+
+      // FeatureGroup to store editable layers
+      var drawnItems = new L.FeatureGroup();
+
+      //NASA NEX-DCP30 raster tiles from HOLOS
+      var climateRasterUrl = nexdcp30Tiles.getURL({
+        model: 'gfdl-esm2m',
+        scenario: 'rcp60',
+        climatevar: 'tasmax'
+      });
+
+      climateRasterUrl = holos[env].tileserver + climateRasterUrl;
+
+      var climateRaster = L.tileLayer( climateRasterUrl, {
+          attribution: '<a href="https://cds.nccs.nasa.gov/nex/" target="_blank">NASA</a>',
+          subdomains: ["otile1", "otile2", "otile3", "otile4"],
+          opacity: 0.5
+      });
+
+      
+
+
+      // INITIALIZE MAP
+
+      var map = L.map('map', {
+        center: [39.82, -98.57],
+        zoom: 5,
+        minZoom: 5,
+        maxZoom: 15,
+        attributionControl: false,
+        //layers: [CartoDB_DarkMatter, climateRaster, drawnItems]
+        layers: [CartoDB_DarkMatter, drawnItems]
+      });
+
+      // Create custom leaflet icon for marker
+      var icon =  L.icon({
+        iconUrl: 'css/images/marker-icon.png'
+      });
+
+      // Add Leaflet.draw control to map
+      var drawControl = new L.Control.Draw({
+        draw: {
+          polyline: false,
+          polygon: false,
+          circle: false,
+          rectangle: {
+            shapeOptions: {
+              color: '#0078A8'
+            },
+            showArea: false
+          },
+          marker: {
+            icon: icon
+          }
+        },
+        edit: {
+          featureGroup: drawnItems,
+          edit: false,
+          remove: false
+        }
+      });
+      map.addControl(drawControl);
+
+
+
       
       // INITIALIZE D3 COMPONENTS
 
@@ -32,8 +114,8 @@ define(function (require) {
       var slider_width = $('#year-slider').width();
       var slider_height = $('#year-slider').height();
       var slider_timeScale = nexdcp30Tiles.opts.period;
-      var slider_startingValue = new Date('2032');
-      var slider_formatDate = d3.time.format("%Y");
+      var slider_startingValue = new Date('2032-03');
+      var slider_formatDate = d3.time.format("%B %Y");
       var yearSlider = timeSlider
             .width(slider_width)
             .height(slider_height)
@@ -43,7 +125,8 @@ define(function (require) {
       d3.select('#year-slider').call(yearSlider);
       yearSlider.on('brushed', function(d){
         console.log(d);
-      })
+      });
+      
 
 
       // Chart
@@ -194,86 +277,7 @@ define(function (require) {
     });
 
       
-      // BOOTSTRAP INITIALIZATIONS
 
-      // Tooltips
-      $('[data-toggle="tooltip"]').tooltip();
-
-      
-
-      
-
-
-      // INITIALIZE LAYERS
-
-      // Basemap
-      var CartoDB_DarkMatter = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-        attribution: '<a href="http://www.openstreetmap.org/copyright" target="_blank">OSM</a> | <a href="http://cartodb.com/attributions" target="_blank">CartoDB</a> |',
-        subdomains: 'abcd',
-        maxZoom: 19
-      });
-
-      // FeatureGroup to store editable layers
-      var drawnItems = new L.FeatureGroup();
-
-      //NASA NEX-DCP30 raster tiles from HOLOS
-      var climateRasterUrl = nexdcp30Tiles.getURL({
-        model: 'gfdl-esm2m',
-        scenario: 'rcp60',
-        climatevar: 'tasmax'
-      });
-
-      climateRasterUrl = holos[env].tileserver + climateRasterUrl;
-
-      var climateRaster = L.tileLayer( climateRasterUrl, {
-          attribution: '<a href="https://cds.nccs.nasa.gov/nex/" target="_blank">NASA</a>',
-          subdomains: ["otile1", "otile2", "otile3", "otile4"],
-          opacity: 0.5
-      });
-
-      
-
-
-      // INITIALIZE MAP
-
-      var map = L.map('map', {
-        center: [39.82, -98.57],
-        zoom: 5,
-        minZoom: 5,
-        maxZoom: 15,
-        attributionControl: false,
-        //layers: [CartoDB_DarkMatter, climateRaster, drawnItems]
-        layers: [CartoDB_DarkMatter, drawnItems]
-      });
-
-      // Create custom leaflet icon for marker
-      var icon =  L.icon({
-        iconUrl: 'css/images/marker-icon.png'
-      });
-
-      // Add Leaflet.draw control to map
-      var drawControl = new L.Control.Draw({
-        draw: {
-          polyline: false,
-          polygon: false,
-          circle: false,
-          rectangle: {
-            shapeOptions: {
-              color: '#0078A8'
-            },
-            showArea: false
-          },
-          marker: {
-            icon: icon
-          }
-        },
-        edit: {
-          featureGroup: drawnItems,
-          edit: false,
-          remove: false
-        }
-      });
-      map.addControl(drawControl);
 
 
 
@@ -318,13 +322,6 @@ define(function (require) {
 
       // Update date in upper right corner
 
-
-
-
-
-
-
-      // INITIALIZE CHART
 
 
 
