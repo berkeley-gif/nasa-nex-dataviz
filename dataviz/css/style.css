@@ -225,7 +225,7 @@ p {
   margin-left: auto;
   width: 80%;
   font-size: 14px;
-  background-color: white;
+  background-color: rgba(238, 238, 238, 0.7);
 }
 .axis {
   shape-rendering: crispEdges;

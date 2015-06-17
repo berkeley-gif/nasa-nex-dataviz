@@ -14,8 +14,6 @@ define(function (require) {
 
   require('leaflet.draw');
   require('bootstrap');
-
-  
  
 
 
@@ -46,23 +44,18 @@ define(function (require) {
       // FeatureGroup to store editable layers
       var drawnItems = new L.FeatureGroup();
 
+      
       //NASA NEX-DCP30 raster tiles from HOLOS
-      var climateRasterUrl = nexdcp30Tiles.getURL({
-        model: 'gfdl-esm2m',
-        scenario: 'rcp60',
-        climatevar: 'tasmax'
-      });
+      var rasterTiles = nexdcp30Tiles();
+      rasterTilesUrl = holos[env].tileserver + rasterTiles.getURL();
 
-      climateRasterUrl = holos[env].tileserver + climateRasterUrl;
-
-      var climateRaster = L.tileLayer( climateRasterUrl, {
+      var rasterLayer = L.tileLayer( rasterTilesUrl, {
           attribution: '<a href="https://cds.nccs.nasa.gov/nex/" target="_blank">NASA</a>',
           subdomains: ["otile1", "otile2", "otile3", "otile4"],
           opacity: 0.5
       });
 
       
-
 
       // INITIALIZE MAP
 
@@ -72,8 +65,8 @@ define(function (require) {
         minZoom: 5,
         maxZoom: 15,
         attributionControl: false,
-        //layers: [CartoDB_DarkMatter, climateRaster, drawnItems]
-        layers: [CartoDB_DarkMatter, drawnItems]
+        layers: [CartoDB_DarkMatter, rasterLayer, drawnItems]
+        //layers: [CartoDB_DarkMatter, drawnItems]
       });
 
       // Create custom leaflet icon for marker
@@ -106,6 +99,15 @@ define(function (require) {
       map.addControl(drawControl);
 
 
+      // INITIALIZE QUERY PARAMS
+      // TODO: This should be part of data manager module
+
+      var queryParams = {
+        
+      }
+
+
+
 
       
       // INITIALIZE D3 COMPONENTS
@@ -113,8 +115,8 @@ define(function (require) {
       // Year slider for map tiles
       var slider_width = $('#map-tile-slider').width();
       var slider_height = $('#map-tile-slider').height();
-      var slider_timeScale = nexdcp30Tiles.opts.period;
-      var slider_startingValue = new Date('2032-03');
+      var slider_timeScale = rasterTiles.getOpts().timeScale;
+      var slider_startingValue = new Date('2031-03');
       var slider_formatDate = d3.time.format("%B %Y");
       var yearSlider = timeSlider
             .width(slider_width)
@@ -123,9 +125,7 @@ define(function (require) {
             .startingValue(slider_startingValue)
             .formatDate(slider_formatDate);
       d3.select('#slider-svg').call(yearSlider);
-      yearSlider.on('brushed', function(d){
-        console.log(d);
-      });
+
       
 
 
@@ -276,19 +276,6 @@ define(function (require) {
      
     });
 
-      
-
-
-
-
-      // INITIALIZE QUERY PARAMS
-
-      var geojson;
-
-      var params = {
-        geojson: geojson
-      }
-
 
 
       // MAP INTERACTIONS
@@ -305,8 +292,7 @@ define(function (require) {
         
         // add new layer
         var featureCollection = drawnItems.addLayer(e.layer) .toGeoJSON();
-        params.geojson = featureCollection[0];
-        console.log(drawnItems);
+        var geojson = featureCollection[0];
 
         // Update query params and redraw charts
       
@@ -319,6 +305,11 @@ define(function (require) {
       // TIME SLIDER  INTERACTIONS
 
       // Fetch new raster tiles from holos
+      yearSlider.on('brushed', function(d){
+        console.log(d);
+        var month = d;
+        var year = d;
+      });
 
       // Update date in upper right corner
 
