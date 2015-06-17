@@ -76,10 +76,13 @@ p {
 
 
 
-#header {
+#heading {
   padding-left: 2%;
 }
 
+#heading, #map-tile-settings, #map-tile-slider {
+  height: 100px;
+}
 .map-tile-current, .map-tile-icon {
   display: inline-block;
 }
@@ -93,12 +96,11 @@ p {
   color: #EEEEEE;
 }
 
-#map-tile-slider .well {
-  border: none;
-  float: none;
+#collapseSlider {
   background: rgba(5, 5, 5, 0.4);
   text-shadow: 0px 0px 4px black;
 }
+
 
 
 
@@ -191,27 +193,27 @@ p {
  */
 
 
-#year-slider .axis {
+#slider-svg .axis {
   fill: #EEEEEE;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
 
-#year-slider .axis .halo {
+#slider-svg .axis .halo {
   stroke: #EEEEEE;
   stroke-width: 4px;
   stroke-linecap: round;
 }
 
-#year-slider .slider .handle path {
+#slider-svg .slider .handle path {
   stroke: #EEEEEE;
   stroke-width: 3px;
   stroke-linecap: round;
   pointer-events: none;
 }
 
-#year-slider .slider .handle text {
+#slider-svg .slider .handle text {
   fill: #EEEEEE;
   text-align: center;
   font-size: 16px;

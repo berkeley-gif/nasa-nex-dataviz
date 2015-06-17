@@ -45,12 +45,13 @@ define(['d3'], function () {
           handle.select('text').text(formatDate(value));
         })
 
+      console.log('chart', width, height);
 
       var container = d3.select(this).append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
-        .attr('transform', 'translate(' + 10 + ',' + 10 + ')');
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 
       container.append('g')

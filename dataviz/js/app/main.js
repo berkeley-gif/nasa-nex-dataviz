@@ -111,8 +111,8 @@ define(function (require) {
       // INITIALIZE D3 COMPONENTS
 
       // Year slider for map tiles
-      var slider_width = $('#year-slider').width();
-      var slider_height = $('#year-slider').height();
+      var slider_width = $('#map-tile-slider').width();
+      var slider_height = $('#map-tile-slider').height();
       var slider_timeScale = nexdcp30Tiles.opts.period;
       var slider_startingValue = new Date('2032-03');
       var slider_formatDate = d3.time.format("%B %Y");
@@ -122,7 +122,7 @@ define(function (require) {
             .timeScale(slider_timeScale)
             .startingValue(slider_startingValue)
             .formatDate(slider_formatDate);
-      d3.select('#year-slider').call(yearSlider);
+      d3.select('#slider-svg').call(yearSlider);
       yearSlider.on('brushed', function(d){
         console.log(d);
       });
