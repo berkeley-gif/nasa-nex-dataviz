@@ -1,6 +1,9 @@
 // Adapted from zanarmstrong’s block #ddff7cd0b1220bc68a58
 // http://bl.ocks.org/zanarmstrong/ddff7cd0b1220bc68a58
 
+// TODO: The first g element inside the svg has a size larger than svg.
+// This is cutting off the date ticks at the end.
+
 define(['d3'], function () {
 
   'use strict';

@@ -25,13 +25,6 @@ define(function (require) {
 
 
 
-      // BOOTSTRAP INITIALIZATIONS
-
-      // Tooltips
-      $('[data-toggle="tooltip"]').tooltip();
-
-
-
       // INITIALIZE LAYERS
 
       // Basemap
@@ -55,6 +48,22 @@ define(function (require) {
           subdomains: ["otile1", "otile2", "otile3", "otile4"],
           opacity: 0.5
       });
+
+      //Variables to store NASA NEX-DCP30 raster tile options
+      var rasterTilesOptions = rasterTiles.getOpts();
+      var model = rasterTilesOptions.models['gfdl-esm2m'];
+      var scenario = rasterTilesOptions.scenarios['rcp60'];
+      var climatevar = rasterTilesOptions.climatevars['tasmax'];
+      
+
+      // BOOTSTRAP INITIALIZATIONS
+
+      // Tooltips
+      $('[data-toggle="tooltip"]').tooltip();
+      $('.model').attr('title', model.desc );
+      $('.scenario').attr('title', scenario.desc );
+      $('.climatevar').attr('title', climatevar.desc );
+
 
       
 
@@ -116,7 +125,7 @@ define(function (require) {
       // Year slider for map tiles
       var sliderWidth = $('#map-tile-slider').width();
       var sliderHeight = $('#map-tile-slider').height();
-      var sliderTimeScale = rasterTiles.getOpts().timeScale;
+      var sliderTimeScale = rasterTilesOptions.timeScale;
       var sliderDate = rasterTiles.date();
       var sliderFormatDate = d3.time.format("%B %Y");
 
@@ -136,42 +145,36 @@ define(function (require) {
       yearSlider.on('brushed', function(d){
         var date = new Date(d);
         console.log(date);
-        //rasterTiles.date(date);
-        //rasterTilesUrl = holos[env].tileserver + rasterTiles.getURL();
-        //rasterLayer.setUrl(rasterTilesUrl);
-        // Bind the debounced handler to the keyup event.
+        setTimeout(function() {
+          updateMap(date);
+        }, 1000);
 
       });
 
-        debounce( function() {
-          console.log('d')
-        }, 100); // This is the line you want!
+      var updateMap = function(date){
+        // Fetch new tiles
+        rasterTiles.date(date);
+        rasterTilesUrl = holos[env].tileserver + rasterTiles.getURL();
+        rasterLayer.setUrl(rasterTilesUrl);
 
-      function debounce(func, wait, immediate) {
-  var timeout;
-  return function() {
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-};
+        // Update date in upper right corner
+        $('.map-tile-current h2').text(sliderFormatDate(date));
+      }
 
-      // Update date in upper right corner
+      
 
 
       // Chart
       // TODO: This is temporary. Need to separate  it into chart manager 
       // and data manager modules.
-      // NVD3 may not be able to produce time series chart. See issue
+      // NVD3 may not yet provide enough flexibility to
+      // use time scale. See issues:
       // https://github.com/novus/nvd3/issues/145#issuecomment-76990255
-      var chartWidth = $('#d3-canvas').width();
-      var chartHeight = 500;
+      // https://github.com/novus/nvd3/pull/856
+      // d3.chart looks more promising, smaller framework. Write your
+      // own charting code, but use their helper functions.
+      var chartWidth = 700;
+      var chartHeight = 400;
       var margin = {top: 20, right: 60, bottom: 30, left: 40},
       chartWidth = chartWidth - margin.left - margin.right,
       chartHeight = chartHeight - margin.top - margin.bottom;
@@ -326,11 +329,14 @@ define(function (require) {
         
         drawnItems.clearLayers();
         
-        // add new layer
+        // Add selection as new layer
         var featureCollection = drawnItems.addLayer(e.layer) .toGeoJSON();
         var geojson = featureCollection[0];
 
-        // Update query params and redraw charts
+        // TODO: Update query params
+
+        // TODO: Show chart in modal dialog
+        $('#chartModal').modal('show');
       
       });
 

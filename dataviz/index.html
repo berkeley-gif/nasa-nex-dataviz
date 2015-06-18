@@ -48,10 +48,10 @@
         <!-- HEADING --> 
         <div class="col-xs-12 col-sm-12 col-md-4"  id="heading">         
           <h1><span class="title">NASA NEX DCP-30</span></h1>
-          <h4>
-            <span class="title">US Temperature Maximums</span>
-            <span class="title">GFDL-ESM2M RCP 6.0</span>
-          </h4>
+          <h3>
+            <span class="title climatevar" data-toggle="tooltip">US Temperature Maximums</span>
+            <span class="title model" data-toggle="tooltip">(GFDL-ESM2M)</span>
+          </h3>
           <h3>
             
           </h3>
@@ -72,7 +72,7 @@
               </div>
 
               <div  class="map-tile-icon">
-                <a class="btn btn-cog" href="#collapseSlider" data-toggle="collapse" >
+                <a class="btn btn-cog" href="#collapseSlider" data-toggle="collapse" title="Change map settings">
                   <span class='glyphicon glyphicon-cog'></span>
                 </a>
               </div>
@@ -80,17 +80,6 @@
         </div> <!-- End MAP TILE SETTINGS column --> 
 
       </div> <!-- End HEADER Row -->      
-
-
-
-      <!-- CHART  -->
-      <div class="row-fluid">
-        <div class="col-xs-8 col-sm-8 col-md-8 col-md-offset-4" style="margin-top: 100px;height:100%;">
-          <div id="d3-canvas">
-          </div>
-        </div>
-      </div> <!-- End CHART Row -->   
-
 
    </div> <!-- End container -->
 
@@ -129,6 +118,30 @@
       </div>   
      </div>
    </footer>
+
+
+   <!-- Modal for chart -->
+  <div class="modal fade" id="chartModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span class="btn-close">&times;</span></button>
+          <h4 id="chartModalLabel">Timeseries</h4>
+        </div>
+        <div class="modal-body">
+          <div id="d3-canvas">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <h4>
+            <span class="model" data-toggle="tooltip">Model: GFDL-ESM2M </span>
+            <span class="scenario" data-toggle="tooltip">Scenario: RCP 6.0</span>
+            <span class='glyphicon glyphicon-cog' data-toggle="tooltip" title="Change chart settings"></span>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
     <!-- The javascript
