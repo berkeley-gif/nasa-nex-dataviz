@@ -43,7 +43,7 @@ define(['d3'], function (require) {
             }
         };
 
-        _opts.timeFormat = d3.time.format('%Y-%m-%d');
+        _opts.timeFormat = d3.time.format('%Y-%m-16');
 
         _opts.timeScale = d3.time.scale()
                           .domain([new Date('1950-01-17'), new Date('2099-12-16')]);
@@ -52,14 +52,14 @@ define(['d3'], function (require) {
         var _climatevar = 'tasmax';
         var _scenario = 'rcp60';
         var _model = 'gfdl-esm2m';
-        var _timeEvent = _opts.timeFormat(new Date('2031-02-17')); 
+        var _date = new Date('2031-02-17'); 
 
 
         var tiles = {
             climatevar: _climatevar,
             scenario: _scenario,
             model: _model,
-            timeEvent: _timeEvent
+            date: _date
         };
 
 
@@ -70,7 +70,7 @@ define(['d3'], function (require) {
 
         tiles.getURL = function() {
             //'https://dev-ecoengine.berkeley.edu/api/tiles/tasmax_rcp60_r1i1p1_gfdl-esm2m-2031-02-16/{z}/{x}/{y}/';
-            return _climatevar + '_' + _scenario + '_r1i1p1_' + _model + '-' + _timeEvent + '/{z}/{x}/{y}/';
+            return _climatevar + '_' + _scenario + '_r1i1p1_' + _model + '-' + _opts.timeFormat(_date) + '/{z}/{x}/{y}/';
         }
 
 
@@ -93,9 +93,10 @@ define(['d3'], function (require) {
           return tiles;
         };
 
-        tiles.timeEvent = function(_) {
-          if (!arguments.length) return _timeEvent;
-          _timeEvent = _opts.timeFormat(new Date(_));
+        tiles.date = function(_) {
+          if (!arguments.length) return _date;
+          _date = _;
+          //console.log('date from slides', _date);
           return tiles;
         };
 

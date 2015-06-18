@@ -48,6 +48,7 @@ define(function (require) {
       //NASA NEX-DCP30 raster tiles from HOLOS
       var rasterTiles = nexdcp30Tiles();
       rasterTilesUrl = holos[env].tileserver + rasterTiles.getURL();
+      console.log(rasterTilesUrl);
 
       var rasterLayer = L.tileLayer( rasterTilesUrl, {
           attribution: '<a href="https://cds.nccs.nasa.gov/nex/" target="_blank">NASA</a>',
@@ -116,7 +117,7 @@ define(function (require) {
       var sliderWidth = $('#map-tile-slider').width();
       var sliderHeight = $('#map-tile-slider').height();
       var sliderTimeScale = rasterTiles.getOpts().timeScale;
-      var sliderDate = rasterTiles.timeEvent();
+      var sliderDate = rasterTiles.date();
       var sliderFormatDate = d3.time.format("%B %Y");
 
       var yearSlider = timeSlider
@@ -133,11 +134,33 @@ define(function (require) {
 
       // Fetch new raster tiles from holos
       yearSlider.on('brushed', function(d){
-        console.log(d);
-        console.log(rasterTiles.getURL());
-        rasterTiles.timeEvent(d);
-        console.log(rasterTiles.getURL());
+        var date = new Date(d);
+        console.log(date);
+        //rasterTiles.date(date);
+        //rasterTilesUrl = holos[env].tileserver + rasterTiles.getURL();
+        //rasterLayer.setUrl(rasterTilesUrl);
+        // Bind the debounced handler to the keyup event.
+
       });
+
+        debounce( function() {
+          console.log('d')
+        }, 100); // This is the line you want!
+
+      function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
 
       // Update date in upper right corner
 
