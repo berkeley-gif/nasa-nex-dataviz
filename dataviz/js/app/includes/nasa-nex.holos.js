@@ -11,7 +11,7 @@ define(['d3'], function (require) {
         desc: "Earth System Model developed by NOAA's Geophysical Fluid Dynamics Laboratory"
       },
       'ensemble': {
-        name: 'gfdl-esm2m',
+        name: 'ens-avg',
         display_name: 'Ensemble',
         desc: 'Ensemble statistics calculated for each RCP from all model runs available'
       }
@@ -48,17 +48,11 @@ define(['d3'], function (require) {
       }
     };
 
-    _opts.timeFormat = d3.time.format('%Y-%m-16');
-
-    _opts.timeScale = d3.time.scale()
-      .domain([new Date('1950-01-17'), new Date('2099-12-16')]);
-
     // Private local variables for tiles
     var _climatevar = 'tasmax';
     var _scenario = 'rcp60';
-    var _model = 'gfdl-esm2m';
-    var _date = new Date('2031-02-17');
-
+    var _model = 'ens-avg';
+    var _date = new Date('2006-01-16');
     var tiles = {
       climatevar: _climatevar,
       scenario: _scenario,
@@ -66,6 +60,9 @@ define(['d3'], function (require) {
       date: _date
     };
 
+    _opts.timeFormat = d3.time.format('%Y-%m-16');
+    _opts.timeScale = d3.time.scale()
+      .domain([_date, new Date('2099-12-16')]);
 
     // Public functions
     tiles.getOpts = function() {
@@ -73,8 +70,13 @@ define(['d3'], function (require) {
     };
 
     tiles.getURL = function() {
-      //'https://dev-ecoengine.berkeley.edu/api/tiles/tasmax_rcp60_r1i1p1_gfdl-esm2m-2031-02-16/{z}/{x}/{y}/';
-      return _climatevar + '_' + _scenario + '_r1i1p1_' + _model + '-' + _opts.timeFormat(_date) + '/{z}/{x}/{y}/';
+      // tasmin_ens-avg_amon_rcp85-2030-01-16.tif
+      return [
+        _climatevar,
+        _model,
+        'amon',
+        _scenario
+      ].join('_') + '-' + _opts.timeFormat(_date) + '/{z}/{x}/{y}/';
     }
 
     // Getter/setters for modifying tile object
