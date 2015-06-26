@@ -1,4 +1,7 @@
-define(['d3'], function (require) {
+define([
+  'd3',
+  './holos-config'
+], function (d3, config) {
 
   return function () {
     //Private variables
@@ -71,13 +74,13 @@ define(['d3'], function (require) {
 
     tiles.getURL = function() {
       // tasmin_ens-avg_amon_rcp85-2030-01-16.tif
-      return [
+      return config.env().tileURL + [
         _climatevar,
         _model,
         'amon',
         _scenario
       ].join('_') + '-' + _opts.timeFormat(_date) + '/{z}/{x}/{y}/';
-    }
+    };
 
     // Getter/setters for modifying tile object
     tiles.model = function(_) {
