@@ -13,7 +13,6 @@ define(function () {
 	};
 
   config.env = function(_) {
-    console.log('ENV:', _env);
     if (!arguments.length) return config[_env];
     _env = _;
     return config[_env];
