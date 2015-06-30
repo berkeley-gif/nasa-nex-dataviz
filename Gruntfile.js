@@ -8,7 +8,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     clean: {
-      release: 'www-release'
+      release: 'dataviz-release'
     },
 
     requirejs: {
@@ -19,13 +19,15 @@ module.exports = function(grunt) {
 
     cssmin: {
       compile: {
-        files: {
-          'www-release/css/style.css': 'www-release/css/style.css',
-          'www-release/css/bootstrap.css': 'www-release/css/bootstrap.css',
-          'www-release/css/bootstrap-responsive.css': 'www-release/css/bootstrap-responsive.css'
-        }
+        files: [{
+          expand: true,
+          cwd: 'dataviz-release/css',
+          src: '*.css',
+          dest: 'dataviz-release/css',
+        }]
       }
     }
+
   });
 
   // Load tasks from NPM
