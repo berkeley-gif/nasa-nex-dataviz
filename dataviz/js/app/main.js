@@ -2,7 +2,6 @@ define(function (require) {
   // Initialize modules
   var $ = require('jquery');
   var d3 = require('d3');
-  d3.tip = require('d3.tip');
   //var nv = require('nv.d3');
   var L = require('leaflet');
   require('leaflet.draw');
@@ -97,8 +96,6 @@ define(function (require) {
 
       // INITIALIZE QUERY PARAMS
       // TODO: This should be part of data manager module
-      var chartParams = {stat: 'mean'};
-      //var chartParams = {stat: 'mean', periods: 90};
 
       // INITIALIZE D3 COMPONENTS
 
@@ -152,11 +149,9 @@ define(function (require) {
         drawnItems.clearLayers();
         // Add selection as new layer
         var featureCollection = drawnItems.addLayer(e.layer).toGeoJSON();
-        //var geojson = featureCollection[0];
         var geojson = e.layer.toGeoJSON().geometry;
-        chartParams.g = JSON.stringify(geojson);
-        seriesChart.draw(chartParams);
-        $('#chartModal').modal('show');
+        seriesChart.params({g: JSON.stringify(geojson)})
+          .draw();
       });
 
   });
