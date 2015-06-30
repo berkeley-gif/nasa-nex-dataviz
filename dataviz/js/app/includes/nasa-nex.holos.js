@@ -90,26 +90,25 @@ define([
     tiles.model = function(_) {
       if (!arguments.length) return _model;
       _model = _;
-      return tiles;
+      return this;
     };
 
     tiles.scenario = function(_) {
       if (!arguments.length) return _scenario;
       _scenario = _;
-      return tiles;
+      return this;
     };
 
     tiles.climatevar = function(_) {
       if (!arguments.length) return _climatevar;
       _climatevar = _;
-      return tiles;
+      return this;
     };
 
     tiles.date = function(_) {
       if (!arguments.length) return _date;
       _date = _;
-      //console.log('date from slides', _date);
-      return tiles;
+      return this;
     };
 
     tiles.select = function(title) {
