@@ -5,13 +5,9 @@ html, body {
 }
 
 
-
 /**
  * MAP
  */
-
-
-
 #map {
 	position: absolute;
 	width: 100%;
@@ -69,13 +65,43 @@ p {
 }
 
 
+.title.nav {
+  font-size: 1.5em;
+}
+/*All list anchors or just the initial dropdown*/
+.nav.title li > a {
+/*.nav.title > li > a {*/
+  color: #eee;
+  /*font-size: 1.5em;*/
+  /*background-color: transparent;*/
+  /*padding: 0px;*/
+}
+.nav.title > li > a {
+  padding: 0px;
+}
+.nav.title > li > a:hover,
+.nav.title > li > a:focus {
+  text-decoration: none;
+  /*background-color: #eeeeee;*/
+  background-color: transparent;
+}
+/*.title.nav .open > a {*/
+  /*background-color: transparent;*/
+/*}*/
+.nav.title .open > a,
+.nav.title .open > a:hover,
+.nav.title .open > a:focus {
+  background-color: transparent;
+  border-color: #428bca;
+}
+.dropdown-menu {
+  background: rgba(5, 5, 5, 0.4);
+}
+
 
 /**
  * HEADER
  */
-
-
-
 #heading {
   padding-left: 2%;
 }
@@ -102,14 +128,9 @@ p {
 }
 
 
-
-
 /**
  * FOOTER
  */
-
-
-
 .footer {
   position: absolute;
   width: 100%;
@@ -145,13 +166,11 @@ p {
 }
 
 
-
 /**
  * BOOTSTRAP COMPONENTS
  */
 
 /* Tooltips */
-
 .tooltip-inner {
   font-size: 14px;
   color: rgb(0,0,0);
@@ -196,7 +215,6 @@ http://stackoverflow.com/questions/18422223/bootstrap-3-modal-vertical-position-
   left:40%;
   outline: none;
   overflow:hidden;
-
 }
 
 #chartModal h4, p {
@@ -232,11 +250,10 @@ http://stackoverflow.com/questions/18422223/bootstrap-3-modal-vertical-position-
   opacity: 1 !important;
 }
 
+
 /**
  * D3 COMPONENTS
  */
-
-
 #slider-svg .axis {
   fill: #EEEEEE;
   -webkit-user-select: none;
