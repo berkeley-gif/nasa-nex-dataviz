@@ -45,14 +45,11 @@ define(['d3'], function () {
           handle.select('text').text(formatDate(value));
         })
 
-      console.log('chart', width, height);
-
       var container = d3.select(this).append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
 
       container.append('g')
         .attr('class', 'x axis')
@@ -60,57 +57,47 @@ define(['d3'], function () {
         .attr('transform', 'translate(0,' + height / 2 + ')')
         // inroduce axis
         .call(d3.svg.axis()
-        .scale(timeScale)
-          .orient('bottom')
-          .tickFormat(function(d) {
-            return formatDate(d);
-          })
-        .tickSize(0)
-        .tickPadding(12)
-        .tickValues([timeScale.domain()[0], timeScale.domain()[1]]))
+          .scale(timeScale)
+            .orient('bottom')
+            .tickFormat(function(d) {
+              return formatYear(d);
+            })
+          .tickSize(0)
+          .tickPadding(12)
+          .tickValues(timeScale.domain()))
         .select('.domain')
         .select(function() {
           return this.parentNode.appendChild(this.cloneNode(true));
         })
         .attr('class', 'halo');
 
-
       var slider = container.append('g')
         .attr('class', 'slider')
         .call(brush);
 
-
       slider.selectAll('.extent,.resize')
         .remove();
-
 
       slider.select('.background')
         .attr('height', height);
 
-
       var handle = slider.append('g')
         .attr('class', 'handle');
-
 
       handle.append('path')
         .attr('transform', 'translate(0,' + height / 2 + ')')
         .attr('d', 'M 0 -20 V 20');
 
-
       handle.append('text')
         .text(formatDate(dateValue))
         .attr('transform', 'translate(' + (-18) + ' ,' + (height / 2 - 25) + ")");
 
-
-      slider
-        .call(brush.event);
-
-
+      slider.call(brush.event);
     });
   }
 
 
- 
+
   // Expose Public Variables
 
   timeSlider.margin = function(_) {
