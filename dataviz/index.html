@@ -7,53 +7,37 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta charset="utf-8">
-
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@BerkeleyGIF">
     <meta name="twitter:title" content="NASA NEX-DCP30">
     <meta name="twitter:description" content="Climate data visualizations built on HOLOS API serving NASA NEX-DCP30 data">
     <meta name="twitter:creator" content="@BerkeleyGIF">
-
     <!-- The fonts -->
     <link href='http://fonts.googleapis.com/css?family=Oswald:400' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Quattrocento|Fanwood+Text" rel="stylesheet" type="text/css">
-
     <!-- The styles -->
     <link href="./css/bootstrap.css" rel="stylesheet" type='text/css'>
-    <!--<link href="./css/nv.d3.css" rel="stylesheet" type='text/css'>-->
     <link href="./css/leaflet.css" rel="stylesheet" type='text/css'>
     <link href="./css/leaflet.draw.css" rel="stylesheet" type='text/css'>
     <link href="./css/style.css" rel="stylesheet" type='text/css'>
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
   </head>
-
   <body>
-
     <!-- Full page MAP: Absolutely positioned div -->
     <div id="map"></div>
-
-
     <div class="container-fluid" style="height:100%;">
-
       <!-- HEADER  -->
       <div class="row-fluid">
-
         <!-- HEADING -->
         <div class="col-xs-12 col-sm-12 col-md-4"  id="heading">
-          <h1><span class="title">NASA NEX DCP-30</span></h1>
-          <!--<h3>-->
-            <!--<span class="title climatevar" data-toggle="tooltip">US Temperature Maximums</span>-->
-            <!--<span class="title model" data-toggle="tooltip">(GFDL-ESM2M)</span>-->
-          <!--</h3>-->
-          <!--<h3></h3>-->
-
+          <h1>
+            <span class="title">NASA NEX DCP-30</span>
+          </h1>
           <ul class="nav nav-pills title">
             <li role="presentation" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -71,113 +55,96 @@
               </ul>
             </li>
           </ul>
-
         </div> <!-- End HEADING column -->
 
         <!-- MAP TILE SLIDER -->
         <div class="col-xs-12 col-sm-12 col-md-5" id="map-tile-slider">
-              <div class="collapse" id="collapseSlider">
-                <!-- Tile slider -->
-                <div id="slider-svg"></div>
-              </div>
+          <div class="collapse" id="collapseSlider">
+            <!-- Tile slider -->
+            <div id="slider-svg"></div>
+          </div>
         </div> <!-- End MAP TILE SLIDER column -->
 
         <!-- MAP TILE SETTINGS -->
         <div class="col-xs-12 col-sm-12 col-md-3" id="map-tile-settings">
-              <div class="map-tile-current">
-                <h2>January 2006</h2>
-              </div>
-
-              <div  class="map-tile-icon">
-                <a class="btn btn-cog" href="#collapseSlider" data-toggle="collapse" title="Change map settings">
-                  <span class='glyphicon glyphicon-cog'></span>
-                </a>
-              </div>
-
+          <div class="map-tile-current">
+            <h2>January 2006</h2>
+          </div>
+          <div class="map-tile-icon">
+            <a class="btn btn-cog" href="#collapseSlider" data-toggle="collapse" title="Change map settings">
+              <span class='glyphicon glyphicon-cog'></span>
+            </a>
+          </div>
         </div> <!-- End MAP TILE SETTINGS column -->
-
       </div> <!-- End HEADER Row -->
+    </div> <!-- End container -->
 
-   </div> <!-- End container -->
-
-    <!-- LOGO (position: absolute;)  -->
+    <!-- LOGO -->
     <div id="holos-logo">
-        <a href="http://holos.berkeley.edu/" data-toggle="tooltip" title="Berkeley Ecoinformatics Engine" ><img src="css/images/HOLOS_logo_color_horizontal_highres_transparent.png" alt="HOLOS" height="40"></a>
-        <p>
-          <span class="attribution"> Leaflet | CartoDB | NASA</span>
-        </p>
+      <a href="http://holos.berkeley.edu/" data-toggle="tooltip" title="Berkeley Ecoinformatics Engine" ><img src="css/images/HOLOS_logo_color_horizontal_highres_transparent.png" alt="HOLOS" height="40"></a>
+      <p><span class="attribution"> Leaflet | CartoDB | NASA</span></p>
     </div>
 
-
-    <!-- FOOTER (position: absolute;)-->
+    <!-- FOOTER -->
     <footer class="footer">
-     <div class="container-fluid">
-      <div class="row-fluid">
+      <div class="container-fluid">
+        <div class="row-fluid">
 
-        <div class="col-xs-6 col-sm-6 col-md-2">
-          <div class="actions">
-            <p>Step 1 : Use toolbar to place a point or draw a rectangle</p>
+          <div class="col-xs-6 col-sm-6 col-md-2">
+            <div class="actions">
+              <p>Step 1 : Use toolbar to place a point or draw a rectangle</p>
+            </div>
           </div>
-        </div>
 
-        <div class="col-xs-6 col-sm-6 col-md-2">
-          <div class="actions">
-            <p>Step 2 : Explore chart</p>
+          <div class="col-xs-6 col-sm-6 col-md-2">
+            <div class="actions">
+              <p>Step 2 : Explore chart</p>
+            </div>
           </div>
-        </div>
 
-        <div class="col-xs-6 col-sm-6 col-md-2">
-          <div class="actions">
-            <p>Step 3 : Use <span class='glyphicon glyphicon-cog'></span> to adjust map and chart parameters</p>
+          <div class="col-xs-6 col-sm-6 col-md-2">
+            <div class="actions">
+              <p>Step 3 : Use <span class='glyphicon glyphicon-cog'></span> to adjust map and chart parameters</p>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
-     </div>
-   </footer>
+    </footer>
 
-
-   <!-- Modal for chart -->
-  <div class="modal fade" id="chartModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span class="btn-close">&times;</span></button>
-          <h4 id="chartModalLabel">Time series</h4>
-        </div>
-        <div class="modal-body">
-          <div id="d3-canvas">
+    <!-- Modal for chart -->
+    <div class="modal fade" id="chartModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span class="btn-close">&times;</span></button>
+            <h4 id="chartModalLabel">Time series</h4>
           </div>
-        </div>
-        <div class="modal-footer">
-          <h4>
-            <!--<span class="model" data-toggle="tooltip">Model: GFDL-ESM2M </span>-->
-            <span class="model" data-toggle="tooltip">Model: Ensemble Average </span>
-            <span class="scenario" data-toggle="tooltip">Scenario: RCP
-              <span>2.6</span>
-            </span>
-            <!--<span class='glyphicon glyphicon-cog' data-toggle="tooltip" title="Change chart settings"></span>-->
-          </h4>
+          <div class="modal-body">
+            <div id="d3-canvas"></div>
+          </div>
+          <div class="modal-footer">
+            <h4>
+              <span class="model" data-toggle="tooltip">Model: Ensemble Average </span>
+              <span class="scenario" data-toggle="tooltip">Scenario: RCP
+                <span>2.6</span>
+              </span>
+            </h4>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-
-    <!-- The javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
 
     <script src="./js/vendor/require.js"></script>
     <script type="text/javascript">
-    // Load common code that includes config,
-    // then load the app logic for this page.
-    require(['./js/common'], function (common) {
-      // ./js/common.js sets the baseUrl to be ./js/
-      // You can ask for 'app/main' here instead
-      // of './js/app/main'
-      require(['app/main']);
-    });
+      // Load common code that includes config,
+      // then load the app logic for this page.
+      require(['./js/common'], function (common) {
+        // ./js/common.js sets the baseUrl to be ./js/
+        // You can ask for 'app/main' here instead
+        // of './js/app/main'
+        require(['app/main']);
+      });
     </script>
 
   </body>
