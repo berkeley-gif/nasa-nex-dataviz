@@ -34,24 +34,25 @@ define(function (require) {
       console.log(rasterTilesUrl);
 
       var rasterLayer = L.tileLayer( rasterTilesUrl, {
-          attribution: '<a href="https://cds.nccs.nasa.gov/nex/" target="_blank">NASA</a>',
-          subdomains: ["otile1", "otile2", "otile3", "otile4"],
-          opacity: 0.5
+        attribution: '<a href="https://cds.nccs.nasa.gov/nex/" target="_blank">NASA</a>',
+        subdomains: ["otile1", "otile2", "otile3", "otile4"],
+        opacity: 0.5
       });
 
       //Variables to store NASA NEX-DCP30 raster tile options
       var rasterTilesOptions = rasterTiles.getOpts();
-      var model = rasterTilesOptions.models['gfdl-esm2m'];
-      var scenario = rasterTilesOptions.scenarios['rcp60'];
-      var climatevar = rasterTilesOptions.climatevars['tasmax'];
 
 
       // BOOTSTRAP INITIALIZATIONS
       // Tooltips
       $('[data-toggle="tooltip"]').tooltip();
-      $('.model').attr('title', model.desc );
-      $('.scenario').attr('title', scenario.desc );
-      $('.climatevar').attr('title', climatevar.desc );
+      $('.dropdown-menu > li').click(function(evt) {
+        var menuText = $(evt.target).text();
+        rasterTiles.select(menuText.toLowerCase());
+        updateMap();
+        $('.scenario > span').text(rasterTiles.scenarioNumber());
+        $('.climatevar').text(menuText);
+      });
 
 
       // INITIALIZE MAP
@@ -62,7 +63,6 @@ define(function (require) {
         maxZoom: 15,
         attributionControl: false,
         layers: [CartoDB_DarkMatter, rasterLayer, drawnItems]
-        //layers: [CartoDB_DarkMatter, drawnItems]
       });
 
       // Create custom leaflet icon for marker
@@ -94,8 +94,6 @@ define(function (require) {
       });
       map.addControl(drawControl);
 
-      // INITIALIZE QUERY PARAMS
-      // TODO: This should be part of data manager module
 
       // INITIALIZE D3 COMPONENTS
 
@@ -115,27 +113,28 @@ define(function (require) {
 
       d3.select('#slider-svg').call(yearSlider);
 
-
       // TIME SLIDER  INTERACTIONS
       // Fetch new raster tiles from holos
-      yearSlider.on('brushed', function(d){
+      yearSlider.on('brushed', function(d) {
         console.log('DATE:', d);
-        var date = new Date(d);
+        //var date = new Date(d);
+        //var date = parseDate(d);
+        var date = sliderFormatDate.parse(d);
         console.log(date);
         setTimeout(function() {
-          updateMap(date);
+          rasterTiles.date(date);
+          updateMap();
         }, 1000);
 
       });
 
-      var updateMap = function(date){
+      //var updateMap = function(date){
+      var updateMap = function(){
         // Fetch new tiles
-        rasterTiles.date(date);
         rasterTilesUrl = rasterTiles.getURL();
         rasterLayer.setUrl(rasterTilesUrl);
-
         // Update date in upper right corner
-        $('.map-tile-current h2').text(sliderFormatDate(date));
+        $('.map-tile-current h2').text(sliderFormatDate(rasterTiles.date()));
       };
 
       // MAP INTERACTIONS

@@ -53,7 +53,7 @@ define([
 
     // Private local variables for tiles
     var _climatevar = 'tasmax';
-    var _scenario = 'rcp60';
+    var _scenario = 'rcp26';
     var _model = 'ens-avg';
     var _date = new Date('2006-01-16');
     var tiles = {
@@ -107,6 +107,23 @@ define([
       //console.log('date from slides', _date);
       return tiles;
     };
+
+    tiles.select = function(title) {
+      var rcp = title.slice(-3).replace('.', '');
+      if (title.indexOf('max') > -1) {
+        var cvar = 'tasmax';
+      } else if (title.indexOf('min') > -1) {
+        var cvar = 'tasmin';
+      } else {
+        var cvar = 'pr';
+      }
+      tiles.climatevar(cvar);
+      tiles.scenario('rcp' + rcp);
+    };
+
+    tiles.scenarioNumber = function() {
+      return (tiles.scenario().slice(-2) / 10).toFixed(1);
+    }
 
     return tiles;
   };
