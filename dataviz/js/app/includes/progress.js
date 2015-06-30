@@ -13,17 +13,17 @@ define(['d3'], function (d3) {
         .attr("transform", "translate(" + config.width / 2 + "," + config.height / 2 + ")");
 
     var meter = svg.append("g")
-        .attr("class", "progress-meter");
+      .attr("class", "progress-meter");
 
     var background = meter.append("path")
-        .datum({endAngle: tau})
-        .style("fill", "rgba(70, 70, 70, 0.7)")
-        .attr("d", arc);
+      .datum({endAngle: tau})
+      .style("fill", "rgba(70, 70, 70, 0.7)")
+      .attr("d", arc);
 
     var foreground = meter.append("path")
-        .datum({endAngle: .127 * tau})
-        .style("fill", "rgba(161, 163, 165, 0.68)")
-        .attr("d", arc);
+      .datum({endAngle: .127 * tau})
+      .style("fill", "rgba(161, 163, 165, 0.68)")
+      .attr("d", arc);
 
     var duration = 1500;
 
@@ -38,14 +38,11 @@ define(['d3'], function (d3) {
         .attrTween("transform", function() {
           return d3.interpolate("rotate(0)", "rotate(360)");
         });
-      console.log('Setting timeout');
-      console.log('LOAD:', progress.isLoading);
       progress.id = setTimeout(progress.start, duration);
     };
 
     progress.stop = function() {
       this.isLoading = false;
-      console.log('Clearing timeout', this.id);
       clearTimeout(this.id);
       //background.transition().duration(0);
       meter.transition()

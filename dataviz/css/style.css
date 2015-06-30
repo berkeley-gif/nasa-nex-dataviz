@@ -19,22 +19,16 @@ html, body {
 	margin-top: 150px;
 }
 
-/* overriding nv.d3.css svg style */
 .leaflet-overlay-pane svg {
   width: auto !important;
   height: auto !important;
 }
 
 
-
 /**
  * TYPOGRAPHY
  */
-
-
-
 body {
-  font-family: 'Quattrocento', Arial, Helvetica, sans-serif !important;
   font-style: normal;
   font-weight: 400;
   color: #EEEEEE;
