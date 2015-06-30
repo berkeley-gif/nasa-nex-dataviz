@@ -21,7 +21,7 @@
 
     <!-- The styles -->
     <link href="./css/bootstrap.css" rel="stylesheet" type='text/css'>
-    <link href="./css/nv.d3.css" rel="stylesheet" type='text/css'>
+    <!--<link href="./css/nv.d3.css" rel="stylesheet" type='text/css'>-->
     <link href="./css/leaflet.css" rel="stylesheet" type='text/css'>
     <link href="./css/leaflet.draw.css" rel="stylesheet" type='text/css'>
     <link href="./css/style.css" rel="stylesheet" type='text/css'>
@@ -40,35 +40,52 @@
     <div id="map"></div>
 
 
-    <div class="container-fluid" style="height:100%;">       
+    <div class="container-fluid" style="height:100%;">
 
       <!-- HEADER  -->
       <div class="row-fluid">
 
-        <!-- HEADING --> 
-        <div class="col-xs-12 col-sm-12 col-md-4"  id="heading">         
+        <!-- HEADING -->
+        <div class="col-xs-12 col-sm-12 col-md-4"  id="heading">
           <h1><span class="title">NASA NEX DCP-30</span></h1>
-          <h3>
-            <span class="title climatevar" data-toggle="tooltip">US Temperature Maximums</span>
-            <span class="title model" data-toggle="tooltip">(GFDL-ESM2M)</span>
-          </h3>
-          <h3>
-            
-          </h3>
+          <!--<h3>-->
+            <!--<span class="title climatevar" data-toggle="tooltip">US Temperature Maximums</span>-->
+            <!--<span class="title model" data-toggle="tooltip">(GFDL-ESM2M)</span>-->
+          <!--</h3>-->
+          <!--<h3></h3>-->
+
+          <ul class="nav nav-pills title">
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="climatevar">US Temperature Maximums RCP 2.6 </span><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">US Temperature Maximums RCP 2.6</a></li>
+                <li><a href="#">US Temperature Maximums RCP 4.5</a></li>
+                <li><a href="#">US Temperature Maximums RCP 6.0</a></li>
+                <li><a href="#">US Temperature Minimums RCP 2.6</a></li>
+                <li><a href="#">US Temperature Minimums RCP 4.5</a></li>
+                <li><a href="#">US Temperature Minimums RCP 6.0</a></li>
+                <li><a href="#">US Temperature Minimums RCP 8.5</a></li>
+                <li><a href="#">US Precipitation RCP2.6</a></li>
+              </ul>
+            </li>
+          </ul>
+
         </div> <!-- End HEADING column -->
 
         <!-- MAP TILE SLIDER -->
-        <div class="col-xs-12 col-sm-12 col-md-5" id="map-tile-slider"> 
+        <div class="col-xs-12 col-sm-12 col-md-5" id="map-tile-slider">
               <div class="collapse" id="collapseSlider">
-                <!-- Tile slider --> 
-                <div id="slider-svg"></div> 
+                <!-- Tile slider -->
+                <div id="slider-svg"></div>
               </div>
         </div> <!-- End MAP TILE SLIDER column -->
 
         <!-- MAP TILE SETTINGS -->
-        <div class="col-xs-12 col-sm-12 col-md-3" id="map-tile-settings">           
+        <div class="col-xs-12 col-sm-12 col-md-3" id="map-tile-settings">
               <div class="map-tile-current">
-                <h2>February 2031</h2>    
+                <h2>January 2006</h2>
               </div>
 
               <div  class="map-tile-icon">
@@ -77,18 +94,18 @@
                 </a>
               </div>
 
-        </div> <!-- End MAP TILE SETTINGS column --> 
+        </div> <!-- End MAP TILE SETTINGS column -->
 
-      </div> <!-- End HEADER Row -->      
+      </div> <!-- End HEADER Row -->
 
    </div> <!-- End container -->
 
     <!-- LOGO (position: absolute;)  -->
     <div id="holos-logo">
-        <a href="http://holos.berkeley.edu/" data-toggle="tooltip" title="Berkeley Ecoinformatics Engine" ><img src="css/images/HOLOS_logo_color_horizontal_highres_transparent.png" alt="HOLOS" height="40"></a>   
+        <a href="http://holos.berkeley.edu/" data-toggle="tooltip" title="Berkeley Ecoinformatics Engine" ><img src="css/images/HOLOS_logo_color_horizontal_highres_transparent.png" alt="HOLOS" height="40"></a>
         <p>
           <span class="attribution"> Leaflet | CartoDB | NASA</span>
-        </p>     
+        </p>
     </div>
 
 
@@ -115,7 +132,7 @@
           </div>
         </div>
 
-      </div>   
+      </div>
      </div>
    </footer>
 
@@ -126,7 +143,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span class="btn-close">&times;</span></button>
-          <h4 id="chartModalLabel">Timeseries</h4>
+          <h4 id="chartModalLabel">Time series</h4>
         </div>
         <div class="modal-body">
           <div id="d3-canvas">
@@ -134,9 +151,12 @@
         </div>
         <div class="modal-footer">
           <h4>
-            <span class="model" data-toggle="tooltip">Model: GFDL-ESM2M </span>
-            <span class="scenario" data-toggle="tooltip">Scenario: RCP 6.0</span>
-            <span class='glyphicon glyphicon-cog' data-toggle="tooltip" title="Change chart settings"></span>
+            <!--<span class="model" data-toggle="tooltip">Model: GFDL-ESM2M </span>-->
+            <span class="model" data-toggle="tooltip">Model: Ensemble Average </span>
+            <span class="scenario" data-toggle="tooltip">Scenario: RCP
+              <span>2.6</span>
+            </span>
+            <!--<span class='glyphicon glyphicon-cog' data-toggle="tooltip" title="Change chart settings"></span>-->
           </h4>
         </div>
       </div>
