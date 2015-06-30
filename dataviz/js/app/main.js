@@ -104,8 +104,7 @@ define(function (require) {
       var sliderDate = rasterTiles.date();
       var sliderFormatDate = d3.time.format("%B %Y");
 
-      var yearSlider = timeSlider
-        .width(sliderWidth)
+      var yearSlider = timeSlider.width(sliderWidth)
         .height(sliderHeight)
         .timeScale(sliderTimeScale)
         .dateValue(sliderDate)
@@ -116,16 +115,11 @@ define(function (require) {
       // TIME SLIDER  INTERACTIONS
       // Fetch new raster tiles from holos
       yearSlider.on('brushed', function(d) {
-        console.log('DATE:', d);
-        //var date = new Date(d);
-        //var date = parseDate(d);
         var date = sliderFormatDate.parse(d);
-        console.log(date);
         setTimeout(function() {
           rasterTiles.date(date);
           updateMap();
         }, 1000);
-
       });
 
       //var updateMap = function(date){
@@ -141,16 +135,17 @@ define(function (require) {
       // Clear previously drawn marker or polygon
       map.on('draw:drawstart', function() {
         drawnItems.clearLayers();
-      })
+      });
 
       // Create geojson on map click or draw
       map.on('draw:created', function (e) {
         drawnItems.clearLayers();
         // Add selection as new layer
-        var featureCollection = drawnItems.addLayer(e.layer).toGeoJSON();
+        drawnItems.addLayer(e.layer);
         var geojson = e.layer.toGeoJSON().geometry;
+        var series = rasterTiles.getSeriesName();
         seriesChart.params({g: JSON.stringify(geojson)})
-          .draw();
+          .draw(series);
       });
 
   });

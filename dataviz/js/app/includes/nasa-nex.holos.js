@@ -72,14 +72,18 @@ define([
       return _opts;
     };
 
-    tiles.getURL = function() {
-      // tasmin_ens-avg_amon_rcp85-2030-01-16.tif
-      return config.env().tileURL + [
+    tiles.getSeriesName = function() {
+      return [
         _climatevar,
         _model,
         'amon',
         _scenario
-      ].join('_') + '-' + _opts.timeFormat(_date) + '/{z}/{x}/{y}/';
+      ].join('_');
+    }
+
+    tiles.getURL = function() {
+      return config.env().tileURL + tiles.getSeriesName() +
+        '-' + _opts.timeFormat(_date) + '/{z}/{x}/{y}/';
     };
 
     // Getter/setters for modifying tile object

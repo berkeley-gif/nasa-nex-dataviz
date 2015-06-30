@@ -5,17 +5,9 @@ define([
 ], function (d3, tip, config) {
   d3.tip = tip;
   // Chart
-  // TODO: This is temporary. Need to separate  it into chart manager
-  // and data manager modules.
-  // NVD3 may not yet provide enough flexibility to
-  // use time scale. See issues:
-  // https://github.com/novus/nvd3/issues/145#issuecomment-76990255
-  // https://github.com/novus/nvd3/pull/856
-  // d3.chart looks more promising, smaller framework. Write your
-  // own charting code, but use their helper functions.
   var chartWidth = 700,
       chartHeight = 400;
-  var margin = {top: 20, right: 60, bottom: 30, left: 40},
+  var margin = {top: 20, right: 20, bottom: 30, left: 60},
       chartWidth = chartWidth - margin.left - margin.right,
       chartHeight = chartHeight - margin.top - margin.bottom;
 
@@ -39,17 +31,14 @@ define([
     .orient('left')
     .tickSize(chartWidth)
     .tickPadding(6)
-    .tickFormat(function(d) { return d + ' °C'; });
+    .tickFormat(function(d) { return d.toFixed(2) + ' °C'; });
 
-  //Color scale to plot different lines
-  var color = d3.scale.ordinal()
-    .range(['#636769','#AAB3B6','6E7476']);
+  var lineColor = '#f37104';
 
   var line = d3.svg.line()
     .interpolate('cardinal')
-    .x(function(d) { return x(d.label); })
-    //.y(function(d) { return y(d.tavg); });
-    .y(function(d) { return y(d.value); });
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.values); });
 
   var svg = d3.select('#d3-canvas').append('svg')
     .attr('width', chartWidth + margin.left + margin.right)
@@ -73,93 +62,66 @@ define([
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d) {
-      console.log(d);
-      return 'Temperature for year ' + d.label.getFullYear() +
-        ' was ' + d.value.toFixed(2) + ' °C';
+      return 'Temperature for year ' + d.date.getFullYear() +
+        ' was ' + d.values.toFixed(2) + ' °C';
     });
   svg.call(tip);
 
   var params = {
     stat: 'mean',
-    page_size: 24
-    //page_size: 120
+    page_size: 360
   };
   var chart = {};
   var chartURL = config.env().apiEndpoint;
   var elem = $('#chartModal');
 
-  chart.draw = function() {
-    var url = chartURL + 'series/tasmin_ens-avg_amon_rcp85/2070-01-16/2099-12-31/';
+  chart.draw = function(series) {
+    var url = chartURL + 'series/' + series + '/2070-01-16/2099-12-31/';
     $.getJSON(url, params, function(data, error) {
       var data = data.results;
 
       data.forEach(function(d) {
         d.date = parseDate(d.event);
+        d.image = +d.image;
       });
-      //From header row create list varNames that holds names
-      //of columns (series) to plot
-      var labelVar = 'date';
-      //var labelVar = 'event';
-      /*  var varNames = d3.keys(data[0])
-          .filter(function (key) {
-          return key !== labelVar;
-          });*/
-      //var varNames = ['tmax'];
-      var varNames = ['tasmin'];
-      //Set color domain
-      color.domain(varNames);
-      //Read each column to a series array
-      var seriesData = varNames.map(function (name) {
-        return {
-          name: name,
-          values: data.map(function (d) {
-            return {name: name, label: d[labelVar], value: fromKelvin(d.image)};
-          })
-        };
+      var annual = d3.nest()
+        .key(function(d) { return d.date.getFullYear() ;})
+        .rollup(function(d) {
+          return fromKelvin(d3.mean(d, function(g) { return g.image; }));
+        }).entries(data);
+      annual.forEach(function(d) {
+        d.date = new Date(d.key, 0, 1);
       });
-      console.log('seriesData', seriesData);
 
       //Set x axis domain
-      x.domain(d3.extent(data, function(d) { return d.date; }));
+      x.domain(d3.extent(annual, function(d) { return d.date; }));
       //Set y axis domain
-      //y.domain([d3.min(data, function(d) { return d.tmin; }), d3.max(data, function(d) { return d.tmax; })]);
-      y.domain([
-          d3.min(seriesData, function (c) {
-            return d3.min(c.values, function (d) { return d.value; });
-          }),
-          d3.max(seriesData, function (c) {
-            return d3.max(c.values, function (d) { return d.value; });
-          })
-      ]);
+      y.domain(d3.extent(annual, function(d) { return d.values; }));
 
       svg.select('g.x.axis').call(xAxis);
       svg.select('g.y.axis').call(yAxis);
 
       var lines = svg.selectAll('.line')
-        .data(seriesData)
-        .attr('class','line');
+        .data([annual])
+        .attr('class', 'line');
       // transition from previous paths to new paths
       lines.transition().duration(1500)
-        .attr('d', function (d) { return line(d.values); })
-        .style('stroke', function(){
-          return '#'+Math.floor(Math.random()*16777215).toString(16);
-        });
+        .attr('d', line)
+        .style('stroke', lineColor);
       lines.enter().append('path')
-        .attr('class','line')
-        .attr('d', function (d) { return line(d.values); })
-        .style('stroke', function(){
-          return '#'+Math.floor(Math.random()*16777215).toString(16);
-        });
+        .attr('class', 'line')
+        .attr('d', line)
+        .style('stroke', lineColor);
       lines.exit().remove();
 
       var circles = svg.selectAll('.point')
-        .data(seriesData[0].values, function (d) { return d.value; });
+        .data(annual, function (d) { return d.values; });
       circles.enter().append('circle')
         .attr('class', 'point')
-        .attr('cx', function (d) { return x(d.label); })
-        .attr('cy', function (d) { return y(d.value); })
+        .attr('cx', function (d) { return x(d.date); })
+        .attr('cy', function (d) { return y(d.values); })
         .attr('r', '3px')
-        .style('fill', function (d) { return d3.rgb(color(d.name)).brighter(); })
+        .style('fill', function (d) { return d3.rgb(lineColor).brighter(); })
         .on('mouseover', tip.show)
         .on('mouseout',  tip.hide);
       circles.exit().remove();
