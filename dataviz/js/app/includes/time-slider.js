@@ -1,36 +1,33 @@
 // Adapted from zanarmstrong’s block #ddff7cd0b1220bc68a58
 // http://bl.ocks.org/zanarmstrong/ddff7cd0b1220bc68a58
 
-// TODO: The first g element inside the svg has a size larger than svg.
-// This is cutting off the date ticks at the end.
-
 define(['d3'], function () {
-
   'use strict';
 
- 
   // Public Variables with Default Settings
   var width = null;
   var height = null;
   var margin = {
-    top: 5,
-    right: 5,
-    bottom: 5,
-    left: 5
+    top: 20,
+    right: 50,
+    bottom: 20,
+    left: 50
   }
   var timeScale = d3.time.scale()
      .domain([new Date('2012-01-02'), new Date('2013-01-01')])
      .clamp(true);
   var formatDate = d3.time.format('%b %d');
+  var formatYear = d3.time.format('%Y');
   var dateValue = new Date('2012-09-20');
   var dispatch = d3.dispatch('brushed');
 
-  
+
   function timeSlider(selection) {
 
     selection.each(function(data) {
-
-      timeScale.range([0, width + margin.left + margin.right]);
+      width = width - margin.left - margin.right;
+      height = height - margin.bottom - margin.top;
+      timeScale.range([0, width]);
 
       var brush = d3.svg.brush()
         .x(timeScale)
