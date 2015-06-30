@@ -1,0 +1,65 @@
+define(['d3'], function (d3) {
+  return function(config) {
+    var radius = Math.min(config.width, config.height) / 2;
+    var tau = 2 * Math.PI;
+
+    var arc = d3.svg.arc()
+      .innerRadius(radius * 0.6)
+      .outerRadius(radius * 0.9)
+      .startAngle(0);
+
+    var svg = d3.select('#d3-canvas > svg')
+      .append("g")
+        .attr("transform", "translate(" + config.width / 2 + "," + config.height / 2 + ")");
+
+    var meter = svg.append("g")
+        .attr("class", "progress-meter");
+
+    var background = meter.append("path")
+        .datum({endAngle: tau})
+        .style("fill", "rgba(70, 70, 70, 0.7)")
+        .attr("d", arc);
+
+    var foreground = meter.append("path")
+        .datum({endAngle: .127 * tau})
+        .style("fill", "rgba(161, 163, 165, 0.68)")
+        .attr("d", arc);
+
+    var duration = 1500;
+
+    var progress = {
+      isLoading: true
+    };
+
+    progress.start = function() {
+      foreground.transition()
+        .ease("linear")
+        .duration(duration)
+        .attrTween("transform", function() {
+          return d3.interpolate("rotate(0)", "rotate(360)");
+        });
+      console.log('Setting timeout');
+      console.log('LOAD:', progress.isLoading);
+      progress.id = setTimeout(progress.start, duration);
+    };
+
+    progress.stop = function() {
+      this.isLoading = false;
+      console.log('Clearing timeout', this.id);
+      clearTimeout(this.id);
+      //background.transition().duration(0);
+      meter.transition()
+        .delay(250)
+        .attr("transform", "scale(0)");
+      delete this.id;
+    };
+
+    progress.reset = function() {
+      this.isLoading = true;
+      meter.attr('transform', null);
+      return this;
+    };
+
+    return progress;
+  };
+});
