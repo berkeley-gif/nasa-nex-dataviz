@@ -22,10 +22,6 @@ requirejs.config({
     'leaflet.draw': {
       deps: ['leaflet']
     },
-    'nv.d3': {
-      deps: ['d3'],
-      exports: 'nv'
-    },
     'd3.tip': {
       deps: ['d3'],
       exports: 'd3.tip'
