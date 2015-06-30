@@ -1,8 +1,9 @@
 define([
   'd3',
   'd3.tip',
-  './holos-config'
-], function (d3, tip, config) {
+  './holos-config',
+  './progress'
+], function (d3, tip, config, progress) {
   d3.tip = tip;
   // Chart
   var chartWidth = 700,
@@ -71,19 +72,31 @@ define([
     stat: 'mean',
     page_size: 360
   };
+
+  var chartURL = config.env().apiEndpoint,
+      $elModal = $('#chartModal');
+
+  var p = progress({
+    width: chartWidth,
+    height: chartHeight
+  });
+
   var chart = {};
-  var chartURL = config.env().apiEndpoint;
-  var elem = $('#chartModal');
 
   chart.draw = function(series) {
+    $elModal.modal('show');
+    p.reset().start();
     var url = chartURL + 'series/' + series + '/2070-01-16/2099-12-31/';
-    $.getJSON(url, params, function(data, error) {
-      var data = data.results;
 
+    $.getJSON(url, params, function(data, error) {
+      p.stop();
+
+      var data = data.results;
       data.forEach(function(d) {
         d.date = parseDate(d.event);
         d.image = +d.image;
       });
+
       var annual = d3.nest()
         .key(function(d) { return d.date.getFullYear() ;})
         .rollup(function(d) {
@@ -125,16 +138,13 @@ define([
         .on('mouseover', tip.show)
         .on('mouseout',  tip.hide);
       circles.exit().remove();
-
-      elem.modal('show');
     });
   };
 
-
   chart.params = function(_) {
-    if (!arguments.length) return chart;
+    if (!arguments.length) return params;
     $.extend(params, _);
-    return chart;
+    return this;
   };
 
   return chart;
