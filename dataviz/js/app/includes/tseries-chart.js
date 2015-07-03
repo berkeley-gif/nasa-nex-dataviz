@@ -31,8 +31,7 @@ define([
     .scale(y)
     .orient('left')
     .tickSize(chartWidth)
-    .tickPadding(6)
-    .tickFormat(function(d) { return d.toFixed(2) + ' °C'; });
+    .tickPadding(6);
 
   var lineColor = '#f37104';
 
@@ -62,10 +61,6 @@ define([
   var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
-    .html(function(d) {
-      return 'Temperature for year ' + d.date.getFullYear() +
-        ' was ' + d.values.toFixed(2) + ' °C';
-    });
   svg.call(tip);
 
   var params = {
@@ -81,12 +76,22 @@ define([
     height: chartHeight
   });
 
-  var chart = {};
+  var chart = {data: null};
+
+  chart.adjustDomains = function() {
+    //Set x axis domain
+    x.domain(d3.extent(this.data, function(d) { return d.date; }));
+    //Set y axis domain
+    y.domain(d3.extent(this.data, function(d) { return d.values; }));
+  };
 
   chart.draw = function(series) {
     $elModal.modal('show');
     p.reset().start();
-    var url = chartURL + 'series/' + series + '/2070-01-16/2099-12-31/';
+    var _this = this,
+        url = chartURL + 'series/' + series.getSeriesName() +
+          '/2050-01-16/2099-12-31/',
+        climvar = series.climatevar();
 
     $.getJSON(url, params, function(data, error) {
       p.stop();
@@ -100,45 +105,57 @@ define([
       var annual = d3.nest()
         .key(function(d) { return d.date.getFullYear() ;})
         .rollup(function(d) {
-          return fromKelvin(d3.mean(d, function(g) { return g.image; }));
+          return climvar.convert(d3.mean(d, function(g) {
+            return g.image;
+          }));
         }).entries(data);
       annual.forEach(function(d) {
         d.date = new Date(d.key, 0, 1);
       });
+      _this.data = annual;
 
-      //Set x axis domain
-      x.domain(d3.extent(annual, function(d) { return d.date; }));
-      //Set y axis domain
-      y.domain(d3.extent(annual, function(d) { return d.values; }));
-
+      _this.adjustDomains();
+      yAxis.tickFormat(function(d) { return d.toFixed(2) + ' ' + climvar.units; });
+      tip.html(function(d) {
+        return 'Year ' + d.date.getFullYear() +
+          ': ' + d.values.toFixed(2) + ' ' + climvar.units;
+      });
       svg.select('g.x.axis').call(xAxis);
       svg.select('g.y.axis').call(yAxis);
 
-      var lines = svg.selectAll('.line')
-        .data([annual])
-        .attr('class', 'line');
-      // transition from previous paths to new paths
-      lines.transition().duration(1500)
-        .attr('d', line)
-        .style('stroke', lineColor);
-      lines.enter().append('path')
-        .attr('class', 'line')
-        .attr('d', line)
-        .style('stroke', lineColor);
-      lines.exit().remove();
-
-      var circles = svg.selectAll('.point')
-        .data(annual, function (d) { return d.values; });
-      circles.enter().append('circle')
-        .attr('class', 'point')
-        .attr('cx', function (d) { return x(d.date); })
-        .attr('cy', function (d) { return y(d.values); })
-        .attr('r', '3px')
-        .style('fill', function (d) { return d3.rgb(lineColor).brighter(); })
-        .on('mouseover', tip.show)
-        .on('mouseout',  tip.hide);
-      circles.exit().remove();
+      _this.drawLines();
+      _this.drawPoints();
     });
+  };
+
+  chart.drawLines = function() {
+    var lines = svg.selectAll('.line')
+      .data([this.data])
+      .attr('class', 'line');
+    // transition from previous paths to new paths
+    lines.transition().duration(1500)
+      .attr('d', line)
+      .style('stroke', lineColor);
+    lines.enter().append('path')
+      .attr('class', 'line')
+      .attr('d', line)
+      .style('stroke', lineColor);
+    lines.exit().remove();
+  };
+
+  chart.drawPoints = function() {
+    var circles = svg.selectAll('.point')
+      //.data(annual, function (d) { return d.values; });
+      .data(this.data, function (d) { return d.values; });
+    circles.enter().append('circle')
+      .attr('class', 'point')
+      .attr('cx', function (d) { return x(d.date); })
+      .attr('cy', function (d) { return y(d.values); })
+      .attr('r', '3px')
+      .style('fill', function (d) { return d3.rgb(lineColor).brighter(); })
+      .on('mouseover', tip.show)
+      .on('mouseout',  tip.hide);
+    circles.exit().remove();
   };
 
   chart.params = function(_) {

@@ -63,7 +63,7 @@ define(function (require) {
     });
 
     // Create custom leaflet icon for marker
-    var icon =  L.icon({
+    var icon = L.icon({
       iconUrl: 'css/images/marker-icon.png'
     });
 
@@ -140,9 +140,8 @@ define(function (require) {
       // Add selection as new layer
       drawnItems.addLayer(e.layer);
       var geojson = e.layer.toGeoJSON().geometry;
-      var series = rasterTiles.getSeriesName();
       seriesChart.params({g: JSON.stringify(geojson)})
-        .draw(series);
+        .draw(rasterTiles);
     });
   });
 });
