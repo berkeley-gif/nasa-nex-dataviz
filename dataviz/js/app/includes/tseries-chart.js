@@ -1,7 +1,7 @@
 define([
   'd3',
   'd3.tip',
-  './holos-config',
+  './config',
   './progress'
 ], function (d3, tip, config, progress) {
   d3.tip = tip;

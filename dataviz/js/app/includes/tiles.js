@@ -1,6 +1,6 @@
 define([
   'd3',
-  './holos-config'
+  './config'
 ], function (d3, config) {
   //Private variables
   var fromKelvin = function(k) { return k - 273.15 };
