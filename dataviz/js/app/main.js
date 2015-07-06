@@ -8,7 +8,7 @@ define(function (require) {
 
   var holos = require('app/includes/holos-config');
   // INITIALIZE HOLOS ENV
-  var nexdcp30Tiles = require('app/includes/nasa-nex.holos');
+  var tiles = require('app/includes/nasa-nex.holos');
   var timeSlider = require('app/includes/time-slider');
   var seriesChart = require('app/includes/tseries-chart');
 
@@ -27,8 +27,7 @@ define(function (require) {
     var drawnItems = new L.FeatureGroup();
 
     //NASA NEX-DCP30 raster tiles from HOLOS
-    var rasterTiles = nexdcp30Tiles();
-    rasterTilesUrl = rasterTiles.getURL();
+    rasterTilesUrl = tiles.getURL();
 
     var rasterLayer = L.tileLayer( rasterTilesUrl, {
       attribution: '<a href="https://cds.nccs.nasa.gov/nex/" target="_blank">NASA</a>',
@@ -37,7 +36,7 @@ define(function (require) {
     });
 
     //Variables to store NASA NEX-DCP30 raster tile options
-    var rasterTilesOptions = rasterTiles.getOpts();
+    var rasterTilesOptions = tiles.getOpts();
 
 
     // BOOTSTRAP INITIALIZATIONS
@@ -45,9 +44,9 @@ define(function (require) {
     $('[data-toggle="tooltip"]').tooltip();
     $('.dropdown-menu > li').click(function(evt) {
       var menuText = $(evt.target).text();
-      rasterTiles.select(menuText.toLowerCase());
+      tiles.select(menuText.toLowerCase());
       updateMap();
-      $('.scenario > span').text(rasterTiles.scenarioNumber());
+      $('.scenario > span').text(tiles.scenarioNumber());
       $('.climatevar').text(menuText);
     });
 
@@ -98,7 +97,7 @@ define(function (require) {
     var sliderWidth = $('#map-tile-slider').width();
     var sliderHeight = $('#map-tile-slider').height();
     var sliderTimeScale = rasterTilesOptions.timeScale;
-    var sliderDate = rasterTiles.date();
+    var sliderDate = tiles.date();
     var sliderFormatDate = d3.time.format("%B %Y");
 
     var yearSlider = timeSlider.width(sliderWidth)
@@ -114,7 +113,7 @@ define(function (require) {
     yearSlider.on('brushed', function(d) {
       var date = sliderFormatDate.parse(d);
       setTimeout(function() {
-        rasterTiles.date(date);
+        tiles.date(date);
         updateMap();
       }, 1000);
     });
@@ -122,10 +121,10 @@ define(function (require) {
     //var updateMap = function(date){
     var updateMap = function(){
       // Fetch new tiles
-      rasterTilesUrl = rasterTiles.getURL();
+      rasterTilesUrl = tiles.getURL();
       rasterLayer.setUrl(rasterTilesUrl);
       // Update date in upper right corner
-      $('.map-tile-current h2').text(sliderFormatDate(rasterTiles.date()));
+      $('.map-tile-current h2').text(sliderFormatDate(tiles.date()));
     };
 
     // MAP INTERACTIONS
@@ -141,7 +140,7 @@ define(function (require) {
       drawnItems.addLayer(e.layer);
       var geojson = e.layer.toGeoJSON().geometry;
       seriesChart.params({g: JSON.stringify(geojson)})
-        .draw(rasterTiles);
+        .draw(tiles);
     });
   });
 });
