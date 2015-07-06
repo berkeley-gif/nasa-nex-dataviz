@@ -1,9 +1,8 @@
 define([
   'd3',
   'd3.tip',
-  './config',
   './progress'
-], function (d3, tip, config, progress) {
+], function (d3, tip, progress) {
   d3.tip = tip;
   // Chart
   var chartWidth = 700,
@@ -12,8 +11,9 @@ define([
       chartWidth = chartWidth - margin.left - margin.right,
       chartHeight = chartHeight - margin.top - margin.bottom;
 
-  var parseDate = d3.time.format('%Y-%m-%d').parse;
-  var fromKelvin = function(k) { return k - 273.15 };
+  var lineColor = '#f37104',
+      $elModal = $('#chartModal'),
+      parseDate = d3.time.format('%Y-%m-%d').parse;
 
   var x = d3.time.scale()
     .range([0, chartWidth]);
@@ -32,8 +32,6 @@ define([
     .orient('left')
     .tickSize(chartWidth)
     .tickPadding(6);
-
-  var lineColor = '#f37104';
 
   var line = d3.svg.line()
     .interpolate('cardinal')
@@ -68,9 +66,6 @@ define([
     page_size: 360
   };
 
-  var chartURL = config.env().apiEndpoint,
-      $elModal = $('#chartModal');
-
   var p = progress({
     width: chartWidth,
     height: chartHeight
@@ -89,11 +84,9 @@ define([
     $elModal.modal('show');
     p.reset().start();
     var _this = this,
-        url = chartURL + 'series/' + series.getSeriesName() +
-          '/2050-01-16/2099-12-31/',
         climvar = series.climatevar();
 
-    $.getJSON(url, params, function(data, error) {
+    $.getJSON(series.getDataURL(), params, function(data, error) {
       p.stop();
 
       var data = data.results;

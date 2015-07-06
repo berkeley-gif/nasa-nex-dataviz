@@ -6,9 +6,7 @@ define(function (require) {
   require('leaflet.draw');
   require('bootstrap');
 
-  var holos = require('app/includes/holos-config');
-  // INITIALIZE HOLOS ENV
-  var tiles = require('app/includes/nasa-nex.holos');
+  var tiles = require('app/includes/tiles');
   var timeSlider = require('app/includes/time-slider');
   var seriesChart = require('app/includes/tseries-chart');
 

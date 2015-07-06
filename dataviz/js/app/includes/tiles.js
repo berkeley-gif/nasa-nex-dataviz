@@ -89,6 +89,11 @@ define([
       '-' + _opts.timeFormat(_date) + '/{z}/{x}/{y}/';
   };
 
+  tiles.getDataURL = function() {
+    return config.env().apiEndpoint + 'series/' + this.getSeriesName() +
+      '/2050-01-16/2099-12-31/';
+  };
+
   // Getter/setters for modifying tile object
   tiles.model = function(_) {
     if (!arguments.length) return _model;
