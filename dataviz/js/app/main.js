@@ -25,9 +25,9 @@ define(function (require) {
     var drawnItems = new L.FeatureGroup();
 
     //NASA NEX-DCP30 raster tiles from HOLOS
-    rasterTilesUrl = tiles.getURL();
+    var rasterTilesUrl = tiles.getURL();
 
-    var rasterLayer = L.tileLayer( rasterTilesUrl, {
+    var rasterLayer = L.tileLayer(rasterTilesUrl, {
       attribution: '<a href="https://cds.nccs.nasa.gov/nex/" target="_blank">NASA</a>',
       subdomains: ["otile1", "otile2", "otile3", "otile4"],
       opacity: 0.5
