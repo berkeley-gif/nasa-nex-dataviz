@@ -91,7 +91,7 @@ define([
 
   tiles.getDataURL = function() {
     return config.env().apiEndpoint + 'series/' + this.getSeriesName() +
-      '/2050-01-16/2099-12-31/';
+      '/2070-01-16/2099-12-31/';
   };
 
   // Getter/setters for modifying tile object
