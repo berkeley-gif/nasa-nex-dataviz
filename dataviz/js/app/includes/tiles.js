@@ -3,7 +3,7 @@ define([
   './config'
 ], function (d3, config) {
   //Private variables
-  var fromKelvin = function(k) { return k - 273.15 };
+  var fromKelvin = function(k) { return (k - 273.15).toFixed(2); };
 
   var tasmax = {
     name: 'tasmax',
@@ -24,7 +24,7 @@ define([
     display_name: 'Precipitation',
     desc: 'Precipitation at surface; includes both liquid and solid phases from all types of clouds (both large-scale and convective)',
     units: 'kg m-2 s-1',
-    convert: function(val) { return val; }
+    convert: function(val) { return val.toFixed(6); }
   };
 
   var _opts = {};

@@ -118,11 +118,10 @@ define([
       _this.data = annual;
 
       _this.adjustDomains();
-      yAxis.tickFormat(function(d) { return d.toFixed(2); });
       yAxisLabel.text(climvar.units);
       tip.html(function(d) {
         return 'Year ' + d.date.getFullYear() +
-          ': ' + d.values.toFixed(2) + ' ' + climvar.units;
+          ': ' + d.values + ' ' + climvar.units;
       });
       svg.select('g.x.axis').call(xAxis);
       svg.select('g.y.axis').call(yAxis);
