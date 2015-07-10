@@ -9,21 +9,21 @@ define([
     name: 'tasmax',
     display_name: 'Average Maximum Temperature',
     desc: 'Monthly mean of the daily-maximum near-surface air temperature',
-    units: ' °C',
+    units: '°C',
     convert: fromKelvin
   };
   var tasmin = {
     name: 'tasmin',
     display_name: 'Average Minimum Temperature',
     desc: 'Monthly mean of the daily-minimum near-surface air temperature',
-    units: ' °C',
+    units: '°C',
     convert: fromKelvin
   };
   var precip = {
     name: 'pr',
     display_name: 'Precipitation',
     desc: 'Precipitation at surface; includes both liquid and solid phases from all types of clouds (both large-scale and convective)',
-    units: 'mm',
+    units: 'kg m-2 s-1',
     convert: function(val) { return val; }
   };
 
