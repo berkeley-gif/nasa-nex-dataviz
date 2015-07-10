@@ -56,6 +56,10 @@ define([
     .attr('class', 'line')
     .attr('clip-path', 'url(#clip)');
 
+  var yAxisLabel = svg.append('text')
+    .attr('class', 'y small')
+    .attr('y', 10);
+
   var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
@@ -72,6 +76,12 @@ define([
   });
 
   var chart = {data: null};
+
+  chart.params = function(_) {
+    if (!arguments.length) return params;
+    $.extend(params, _);
+    return this;
+  };
 
   chart.adjustDomains = function() {
     //Set x axis domain
@@ -108,7 +118,8 @@ define([
       _this.data = annual;
 
       _this.adjustDomains();
-      yAxis.tickFormat(function(d) { return d.toFixed(2) + ' ' + climvar.units; });
+      yAxis.tickFormat(function(d) { return d.toFixed(2); });
+      yAxisLabel.text(climvar.units);
       tip.html(function(d) {
         return 'Year ' + d.date.getFullYear() +
           ': ' + d.values.toFixed(2) + ' ' + climvar.units;
@@ -138,7 +149,6 @@ define([
 
   chart.drawPoints = function() {
     var circles = svg.selectAll('.point')
-      //.data(annual, function (d) { return d.values; });
       .data(this.data, function (d) { return d.values; });
     circles.enter().append('circle')
       .attr('class', 'point')
@@ -149,12 +159,6 @@ define([
       .on('mouseover', tip.show)
       .on('mouseout',  tip.hide);
     circles.exit().remove();
-  };
-
-  chart.params = function(_) {
-    if (!arguments.length) return params;
-    $.extend(params, _);
-    return this;
   };
 
   return chart;
