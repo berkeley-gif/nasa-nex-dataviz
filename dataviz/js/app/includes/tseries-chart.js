@@ -65,23 +65,12 @@ define([
     .offset([-10, 0])
   svg.call(tip);
 
-  var params = {
-    stat: 'mean',
-    page_size: 360
-  };
-
   var p = progress({
     width: chartWidth,
     height: chartHeight
   });
 
   var chart = {data: null};
-
-  chart.params = function(_) {
-    if (!arguments.length) return params;
-    $.extend(params, _);
-    return this;
-  };
 
   chart.adjustDomains = function() {
     //Set x axis domain
@@ -96,7 +85,7 @@ define([
     var _this = this,
         climvar = series.climatevar();
 
-    $.getJSON(series.getDataURL(), params, function(data, error) {
+    $.getJSON(series.getDataURL(), series.dataParams(), function(data, error) {
       p.stop();
 
       var data = data.results;

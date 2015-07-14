@@ -137,8 +137,8 @@ define(function (require) {
       // Add selection as new layer
       drawnItems.addLayer(e.layer);
       var geojson = e.layer.toGeoJSON().geometry;
-      seriesChart.params({g: JSON.stringify(geojson)})
-        .draw(tiles);
+      tiles.dataParams({g: JSON.stringify(geojson)});
+      seriesChart.draw(tiles);
     });
   });
 });

@@ -59,10 +59,14 @@ define([
   };
 
   // Private local variables for tiles
-  var _climatevar = tasmax;
-  var _scenario = 'rcp26';
-  var _model = _opts.models.ensemble.name;
-  var _date = new Date('2006-01-16');
+  var _climatevar = tasmax,
+      _scenario = 'rcp26',
+      _model = _opts.models.ensemble.name,
+      _date = new Date('2006-01-16');
+  var _dataParams = {
+    stat: 'mean',
+    page_size: 360
+  };
 
   _opts.timeFormat = d3.time.format('%Y-%m-16');
   _opts.timeScale = d3.time.scale()
@@ -98,6 +102,12 @@ define([
   tiles.model = function(_) {
     if (!arguments.length) return _model;
     _model = _;
+    return this;
+  };
+
+  tiles.dataParams = function(_) {
+    if (!arguments.length) return _dataParams;
+    $.extend(_dataParams, _);
     return this;
   };
 
