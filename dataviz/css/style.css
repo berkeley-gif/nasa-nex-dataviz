@@ -169,28 +169,28 @@ p {
   margin: 5px;
 }
 .tooltip.top .tooltip-inner {
-  background-color:#EEEEEE;
+  background-color:#eee;
 }
 .tooltip.top .tooltip-arrow {
-  border-top-color: #EEEEEE;
+  border-top-color: #eee;
 }
 .tooltip.right .tooltip-inner {
-  background-color:#EEEEEE;
+  background-color:#eee;
 }
 .tooltip.right .tooltip-arrow {
-  border-right-color: #EEEEEE;
+  border-right-color: #eee;
 }
 .tooltip.bottom .tooltip-inner {
-  background-color:#EEEEEE;
+  background-color:#eee;
 }
 .tooltip.bottom .tooltip-arrow {
-  border-bottom-color: #EEEEEE;
+  border-bottom-color: #eee;
 }  
 .tooltip.left .tooltip-inner {
-  background-color:#EEEEEE;
+  background-color:#eee;
 }
 .tooltip.left .tooltip-arrow {
-  border-left-color: #EEEEEE;
+  border-left-color: #eee;
 } 
 
 
@@ -209,14 +209,14 @@ http://stackoverflow.com/questions/18422223/bootstrap-3-modal-vertical-position-
   font-family: 'Quattrocento', Arial, Helvetica, sans-serif !important;
   font-style: normal;
   font-weight: 400;
-  color: #EEEEEE;
+  color: #eee;
 }
 
 #chartModal > p {
   font-family: 'Quattrocento', Arial, Helvetica, sans-serif !important;
   font-style: normal;
   font-weight: 400;
-  color: #EEEEEE;
+  color: #eee;
 }
 
 #chartModal .modal-dialog {
@@ -231,7 +231,7 @@ http://stackoverflow.com/questions/18422223/bootstrap-3-modal-vertical-position-
 
 #chartModal .btn-close {
   font-size: 30px;
-  color: #EEEEEE;
+  color: #eee;
 }
 
 #chartModal .close {
