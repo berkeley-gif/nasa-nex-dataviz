@@ -57,7 +57,7 @@ define([
     .attr('clip-path', 'url(#clip)');
 
   var yAxisLabel = svg.append('text')
-    .attr('class', 'y small')
+    .attr('class', 'y')
     .attr('y', 10);
 
   var tip = d3.tip()

@@ -31,7 +31,7 @@ html, body {
 body {
   font-style: normal;
   font-weight: 400;
-  color: #EEEEEE;
+  color: #eee;
   font-size: 16px;
 }
 
@@ -79,7 +79,7 @@ p {
   font-size: 20px;
   margin-bottom: 5px;
   padding: 5px 5px;
-  color: #EEEEEE;
+  color: #eee;
 }
 
 #collapseSlider {
@@ -199,10 +199,10 @@ p {
 http://stackoverflow.com/questions/18422223/bootstrap-3-modal-vertical-position-center
 */
 #chartModal {
-  top:30%;
-  left:40%;
+  top: 30%;
+  left: 40%;
   outline: none;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 #chartModal h4, p {
@@ -243,34 +243,35 @@ http://stackoverflow.com/questions/18422223/bootstrap-3-modal-vertical-position-
  * D3 COMPONENTS
  */
 #slider-svg .axis {
-  fill: #EEEEEE;
+  fill: #eee;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
 
 #slider-svg .axis .halo {
-  stroke: #EEEEEE;
+  stroke: #eee;
   stroke-width: 4px;
   stroke-linecap: round;
 }
 
 #slider-svg .slider .handle path {
-  stroke: #EEEEEE;
+  stroke: #eee;
   stroke-width: 3px;
   stroke-linecap: round;
   pointer-events: none;
 }
 
 #slider-svg .slider .handle text {
-  fill: #EEEEEE;
+  fill: #eee;
   text-align: center;
   font-size: 16px;
 }
 
 /* Chart */
-#d3-canvas {
-  background-color: rgba(238, 238, 238, 0.7);
+#d3-canvas text {
+  font-size: 12px;
+  fill: #eee;
 }
 
 .axis {
@@ -286,13 +287,8 @@ http://stackoverflow.com/questions/18422223/bootstrap-3-modal-vertical-position-
   stroke: #000;
 }
  
-.x.axis line {
-  stroke: #fff;
-  stroke-opacity: .5;
-}
- 
 .y.axis line {
-  stroke: #ddd;
+  stroke: #999;
   stroke-width: 1px !important;
 }
  
@@ -307,10 +303,6 @@ rect.pane {
   pointer-events: all;
 }
  
-.tick text {
-  font-size: 12px;
-}
-
 .d3-tip {
   line-height: 1;
   font-weight: bold;
