@@ -11,7 +11,7 @@ define(function () {
   };
 
   var Config = function() {
-    this.env('development');
+    this.env('production');
   };
 
   Config.prototype.env = function(_) {
