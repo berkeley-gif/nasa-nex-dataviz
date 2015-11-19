@@ -96,7 +96,7 @@ define(function (require) {
     var sliderHeight = $('#map-tile-slider').height();
     var sliderTimeScale = rasterTilesOptions.timeScale;
     var sliderDate = tiles.date();
-    var sliderFormatDate = d3.time.format("%B %Y");
+    var sliderFormatDate = d3.time.format('%Y');
 
     var yearSlider = timeSlider.width(sliderWidth)
       .height(sliderHeight)
@@ -116,8 +116,7 @@ define(function (require) {
       }, 1000);
     });
 
-    //var updateMap = function(date){
-    var updateMap = function(){
+    var updateMap = function() {
       // Fetch new tiles
       rasterTilesUrl = tiles.getURL();
       rasterLayer.setUrl(rasterTilesUrl);

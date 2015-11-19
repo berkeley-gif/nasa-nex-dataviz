@@ -8,7 +8,6 @@ requirejs.config({
     'leaflet':                  'vendor/leaflet-src',
     'leaflet.draw':             'vendor/leaflet.draw-src',
     'd3':                       'vendor/d3',
-    'nv.d3':                    'vendor/nv.d3',
     'd3.tip':                   'vendor/d3.tip'
   },
   //Remember: only use shim config for non-AMD scripts,

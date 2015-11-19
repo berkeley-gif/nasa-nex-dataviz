@@ -43,12 +43,12 @@ define([
   };
 
   _opts.scenarios = {
-    'rcp60': {
-      name: 'rcp60',
-      display_name: 'RCP6.0',
+    'rcp45': {
+      name: 'rcp45',
+      display_name: 'RCP4.5',
       desc: 'Representative Concentration Pathways describe ' +
         'future greenhouse gas concentration (not emissions) trajectories. ' +
-        'In RCP6.0, emissions peak around 2080, then decline.'
+        'In RCP4.5, emissions peak around 2040, then decline.'
     }
   };
 
@@ -60,17 +60,14 @@ define([
 
   // Private local variables for tiles
   var _climatevar = tasmax,
-      _scenario = 'rcp26',
+      _scenario = 'rcp45',
       _model = _opts.models.ensemble.name,
-      _date = new Date('2006-01-16');
-  var _dataParams = {
-    stat: 'mean',
-    page_size: 360
-  };
+      _date = new Date(2006, 0, 1);
+  var _dataParams = {page_size: 94 * 12};
 
-  _opts.timeFormat = d3.time.format('%Y-%m-16');
+  _opts.timeFormat = d3.time.format('%Y-01-01');
   _opts.timeScale = d3.time.scale()
-    .domain([_date, new Date('2099-12-16')]);
+    .domain([_date, new Date(2099, 0, 1)]);
 
   var tiles = {};
 
@@ -82,6 +79,7 @@ define([
   tiles.getSeriesName = function() {
     return [
       _climatevar.name,
+      'yr',
       _model,
       'amon',
       _scenario
@@ -95,7 +93,7 @@ define([
 
   tiles.getDataURL = function() {
     return config.env().apiEndpoint + 'series/' + this.getSeriesName() +
-      '/2070-01-16/2099-12-31/';
+      '/2006-01-01/2099-01-01/';
   };
 
   // Getter/setters for modifying tile object

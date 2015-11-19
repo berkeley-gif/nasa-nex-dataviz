@@ -14,11 +14,10 @@ define(['d3'], function () {
     left: 50
   }
   var timeScale = d3.time.scale()
-     .domain([new Date('2012-01-02'), new Date('2013-01-01')])
+     .domain([new Date(2012, 0, 1), new Date(2013, 0, 1)])
      .clamp(true);
-  var formatDate = d3.time.format('%b %d');
-  var formatYear = d3.time.format('%Y');
-  var dateValue = new Date('2012-09-20');
+  var formatDate = d3.time.format('%Y');
+  var dateValue = new Date(2012, 0, 1);
   var dispatch = d3.dispatch('brushed');
 
 
@@ -60,7 +59,7 @@ define(['d3'], function () {
           .scale(timeScale)
             .orient('bottom')
             .tickFormat(function(d) {
-              return formatYear(d);
+              return formatDate(d);
             })
           .tickSize(0)
           .tickPadding(12)
@@ -96,10 +95,7 @@ define(['d3'], function () {
     });
   }
 
-
-
   // Expose Public Variables
-
   timeSlider.margin = function(_) {
       if (!arguments.length) return margin;
       margin.top    = typeof _.top    != 'undefined' ? _.top    : margin.top;
@@ -139,11 +135,7 @@ define(['d3'], function () {
       return timeSlider;
   };
 
-
   d3.rebind(timeSlider, dispatch, 'on');
 
   return timeSlider;
-
-
-
 });

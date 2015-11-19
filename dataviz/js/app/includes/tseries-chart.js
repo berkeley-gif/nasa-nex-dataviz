@@ -91,20 +91,9 @@ define([
       var data = data.results;
       data.forEach(function(d) {
         d.date = parseDate(d.event);
-        d.image = +d.image;
+        d.values = climvar.convert(+d.image);
       });
-
-      var annual = d3.nest()
-        .key(function(d) { return d.date.getFullYear() ;})
-        .rollup(function(d) {
-          return climvar.convert(d3.mean(d, function(g) {
-            return g.image;
-          }));
-        }).entries(data);
-      annual.forEach(function(d) {
-        d.date = new Date(d.key, 0, 1);
-      });
-      _this.data = annual;
+      _this.data = data;
 
       _this.adjustDomains();
       yAxisLabel.text(climvar.units);
