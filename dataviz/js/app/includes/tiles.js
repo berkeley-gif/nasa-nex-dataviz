@@ -63,7 +63,10 @@ define([
       _scenario = 'rcp45',
       _model = _opts.models.ensemble.name,
       _date = new Date(2006, 0, 1);
-  var _dataParams = {page_size: 94 * 12};
+  var _dataParams = {
+    page_size: 94 * 12,
+    stat: 'mean'
+  };
 
   _opts.timeFormat = d3.time.format('%Y-01-01');
   _opts.timeScale = d3.time.scale()
